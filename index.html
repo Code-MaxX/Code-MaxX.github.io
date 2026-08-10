@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sahil Ghule — Backend & AI Systems Engineer</title>
+    <meta
+      name="description"
+      content="Sahil Dilip Ghule — Backend & AI Systems Engineer. FastAPI, ClickHouse, distributed systems, RAG, and large-scale analytics."
+    />
+    <meta name="theme-color" content="#0a0c10" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="bg-glow" aria-hidden="true"></div>
+
+    <header class="nav">
+      <a class="nav__logo" href="#top">SG<span>.</span></a>
+      <nav class="nav__links" id="nav-links">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="btn btn--sm btn--ghost" href="https://github.com/Code-MaxX" target="_blank" rel="noopener">GitHub</a>
+      <button class="nav__toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero__badge">
+          <span class="pulse"></span>
+          Open to impactful backend &amp; AI systems work
+        </div>
+        <p class="hero__eyebrow mono">Backend &amp; AI Systems Engineer</p>
+        <h1 class="hero__title">
+          Sahil Dilip<br />
+          <span class="gradient-text">Ghule</span>
+        </h1>
+        <p class="hero__lead">
+          I design and ship high-throughput backends, analytical pipelines, and AI-powered systems —
+          from ClickHouse-scale data platforms to RAG and async job infrastructure.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#experience">View experience</a>
+          <a class="btn btn--ghost" href="mailto:work.sahilghule@gmail.com">Email me</a>
+        </div>
+        <div class="hero__meta">
+          <div>
+            <span class="mono label">Location</span>
+            <strong>India · Bengaluru / Remote</strong>
+          </div>
+          <div>
+            <span class="mono label">Focus</span>
+            <strong>Distributed backends · Analytics · AI</strong>
+          </div>
+          <div>
+            <span class="mono label">Stack</span>
+            <strong>Python · FastAPI · ClickHouse</strong>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <div class="section__head">
+          <p class="mono label">01 — About</p>
+          <h2>Building systems that hold under real load</h2>
+        </div>
+        <div class="about-grid">
+          <div class="about-card glass">
+            <p>
+              I'm a software engineer focused on backend architecture, large-scale analytics, and
+              practical AI integration. Recently I've owned distributed platforms for availability
+              analytics, re-architected async workers for better concurrency, and shipped crawling,
+              ETL, and RAG-adjacent pipelines in production.
+            </p>
+            <p>
+              I care about clean service boundaries, query performance at scale, and tooling that
+              makes operational data actually useful for enterprise customers.
+            </p>
+          </div>
+          <div class="stat-grid">
+            <div class="stat glass">
+              <span class="stat__n">3+</span>
+              <span class="stat__l">Years shipping production systems</span>
+            </div>
+            <div class="stat glass">
+              <span class="stat__n">M+</span>
+              <span class="stat__l">Analytical records processed via ETL</span>
+            </div>
+            <div class="stat glass">
+              <span class="stat__n">AI</span>
+              <span class="stat__l">RAG, ML pricing &amp; training pipelines</span>
+            </div>
+            <div class="stat glass">
+              <span class="stat__n">B.Tech</span>
+              <span class="stat__l">CSE · AI &amp; ML · VIT Bhopal</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="experience" class="section">
+        <div class="section__head">
+          <p class="mono label">02 — Experience</p>
+          <h2>Where I've built</h2>
+        </div>
+        <div class="timeline">
+          <article class="job glass">
+            <div class="job__side">
+              <span class="job__role">Software Engineer-II</span>
+              <h3>UrbanPiper</h3>
+              <p class="mono job__meta">08/2025 – Present · Bengaluru</p>
+            </div>
+            <ul class="job__points">
+              <li>
+                Owned architecture and development of <strong>Periscope</strong> — a distributed
+                backend on FastAPI, ClickHouse, Python, and async workers.
+              </li>
+              <li>
+                Designed high-throughput analytics pipelines for large-scale availability events and
+                downtime analysis.
+              </li>
+              <li>
+                Migrated async job execution from RQ to <strong>ARQ</strong>, improving scalability,
+                concurrency, and maintainability.
+              </li>
+              <li>
+                Built scheduling/automation workflows, Playwright-based crawling pipelines, and ETL
+                systems processing millions of analytical records.
+              </li>
+            </ul>
+          </article>
+
+          <article class="job glass">
+            <div class="job__side">
+              <span class="job__role">Software Engineer</span>
+              <h3>Apperture AI</h3>
+              <p class="mono job__meta">05/2024 – 08/2025 · Remote</p>
+            </div>
+            <ul class="job__points">
+              <li>
+                Built backend services for analytical dashboards tracking store and item availability
+                across food delivery ecosystems.
+              </li>
+              <li>
+                Designed scalable analytical storage and query systems with
+                <strong>ClickHouse</strong>.
+              </li>
+              <li>
+                Delivered reusable <strong>GraphQL</strong> and <strong>gRPC</strong> services for
+                large-scale data access.
+              </li>
+              <li>
+                Automated AI training-data generation and integrated parameter extraction models
+                into a production <strong>RAG</strong> pipeline.
+              </li>
+            </ul>
+          </article>
+
+          <article class="job glass">
+            <div class="job__side">
+              <span class="job__role">SDE-1</span>
+              <h3>Cogoport</h3>
+              <p class="mono job__meta">02/2023 – 10/2023 · Mumbai</p>
+            </div>
+            <ul class="job__points">
+              <li>Built backend services powering logistics analytics dashboards.</li>
+              <li>
+                Developed ML-based dynamic pricing with <strong>Random Forest</strong> and shipped
+                predictive pricing into production for real-time recommendations.
+              </li>
+              <li>Worked on large operational datasets to improve pricing accuracy.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="skills" class="section">
+        <div class="section__head">
+          <p class="mono label">03 — Skills</p>
+          <h2>Tools I reach for</h2>
+        </div>
+        <div class="skills">
+          <div class="skill-card glass">
+            <h3>Languages</h3>
+            <div class="tags">
+              <span>Python</span><span>SQL</span><span>C++</span>
+            </div>
+          </div>
+          <div class="skill-card glass">
+            <h3>Data systems</h3>
+            <div class="tags">
+              <span>ClickHouse</span><span>PostgreSQL</span><span>MongoDB</span>
+            </div>
+          </div>
+          <div class="skill-card glass">
+            <h3>Backend &amp; APIs</h3>
+            <div class="tags">
+              <span>FastAPI</span><span>GraphQL</span><span>gRPC</span><span>Flask</span>
+            </div>
+          </div>
+          <div class="skill-card glass">
+            <h3>Infra &amp; tooling</h3>
+            <div class="tags">
+              <span>ARQ</span><span>Playwright</span><span>Git</span><span>ETL</span><span>RAG</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="section">
+        <div class="section__head">
+          <p class="mono label">04 — Projects</p>
+          <h2>Selected work</h2>
+        </div>
+        <div class="projects">
+          <a
+            class="project glass"
+            href="https://github.com/Code-MaxX/Prostate_Cancer_Detector"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="project__top">
+              <span class="mono label">ML · Flask</span>
+              <span class="project__arrow">↗</span>
+            </div>
+            <h3>AI-powered Prostate Cancer Detection</h3>
+            <p>
+              Deep learning app predicting prostate cancer probability with Python, Flask, and DNN
+              models — deployed on cloud infrastructure.
+            </p>
+            <div class="tags tags--sm">
+              <span>Python</span><span>Flask</span><span>DNN</span>
+            </div>
+          </a>
+
+          <div class="project glass">
+            <div class="project__top">
+              <span class="mono label">ML · Analytics</span>
+            </div>
+            <h3>Power Plant Output Prediction</h3>
+            <p>
+              Machine learning models predicting full-load electrical power generation, focused on
+              operational efficiency via predictive analytics.
+            </p>
+            <div class="tags tags--sm">
+              <span>Python</span><span>ML</span><span>Regression</span>
+            </div>
+          </div>
+
+          <a
+            class="project glass"
+            href="https://github.com/Code-MaxX/blockchain-tiktok"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="project__top">
+              <span class="mono label">TypeScript · Web3</span>
+              <span class="project__arrow">↗</span>
+            </div>
+            <h3>Blockchain TikTok</h3>
+            <p>
+              A TikTok-style clone exploring decentralized media patterns — TypeScript frontend and
+              blockchain integration experiments.
+            </p>
+            <div class="tags tags--sm">
+              <span>TypeScript</span><span>Blockchain</span>
+            </div>
+          </a>
+
+          <a
+            class="project glass"
+            href="https://github.com/Code-MaxX/Data-Analytics-Projects"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="project__top">
+              <span class="mono label">Analytics</span>
+              <span class="project__arrow">↗</span>
+            </div>
+            <h3>Data Analytics Projects</h3>
+            <p>
+              Notebook-driven analytics work exploring real datasets, visualization, and insight
+              generation.
+            </p>
+            <div class="tags tags--sm">
+              <span>Jupyter</span><span>Python</span><span>SQL</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section id="education" class="section section--tight">
+        <div class="section__head">
+          <p class="mono label">05 — Education &amp; publications</p>
+          <h2>Background</h2>
+        </div>
+        <div class="edu-grid">
+          <div class="glass edu">
+            <span class="mono label">Education</span>
+            <h3>Vellore Institute of Technology — Bhopal</h3>
+            <p>B.Tech · Computer Science Engineering</p>
+            <p class="muted">Specialization in Artificial Intelligence and Machine Learning</p>
+            <p class="mono job__meta">2019 – 2023 · Bhopal, India</p>
+          </div>
+          <div class="glass edu">
+            <span class="mono label">Publication</span>
+            <h3>5th International Conference on Intelligent Computing and Control Systems (ICICCS)</h3>
+            <p class="muted">Peer-reviewed conference publication</p>
+            <p class="mono job__meta">01/12/2020</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section contact">
+        <div class="contact__card glass">
+          <p class="mono label">06 — Contact</p>
+          <h2>Let's build something solid</h2>
+          <p>
+            Open to conversations about backend platforms, analytics infrastructure, and AI systems
+            in production.
+          </p>
+          <div class="contact__links">
+            <a class="btn btn--primary" href="mailto:work.sahilghule@gmail.com">work.sahilghule@gmail.com</a>
+            <a class="btn btn--ghost" href="https://linkedin.com/in/sahil-ghule" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="btn btn--ghost" href="https://github.com/Code-MaxX" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn btn--ghost" href="tel:+918830729336">+91 88307 29336</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Sahil Dilip Ghule · Built with intention</p>
+      <a href="#top" class="mono">Back to top ↑</a>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
