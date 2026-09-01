@@ -16,6 +16,7 @@ uniform float u_aspect;
 uniform float u_camZ;
 uniform vec2  u_pointer;    // normalised device coords of the cursor
 uniform float u_pointerAmp;
+uniform float u_fit;        // <1 in portrait: zoom out so the field still fits
 
 vec3 systemPosition(vec3 free, vec3 lattice, float seed) {
   float phase = seed * 6.2831853;
@@ -60,9 +61,9 @@ void main() {
   vec3 p = systemPosition(a_free, a_lattice, a_seed);
   float viewZ = max(p.z + u_camZ, 0.15);
 
-  vec2 ndc = vec2(p.x / u_aspect, p.y) * (u_focal / viewZ);
+  vec2 ndc = vec2(p.x / u_aspect, p.y) * (u_focal / viewZ) * u_fit;
   gl_Position = vec4(ndc, 0.0, 1.0);
-  gl_PointSize = clamp(u_pointScale * a_size * (u_focal / viewZ), 1.5, 34.0);
+  gl_PointSize = clamp(u_pointScale * a_size * (u_focal / viewZ) * u_fit, 1.8, 34.0);
 
   v_depth = smoothstep(10.0, 1.4, viewZ);
   v_tint = a_tint;
@@ -128,7 +129,7 @@ void main() {
   vec3 p = mix(self, other, a_end);
 
   float viewZ = max(p.z + u_camZ, 0.15);
-  vec2 ndc = vec2(p.x / u_aspect, p.y) * (u_focal / viewZ);
+  vec2 ndc = vec2(p.x / u_aspect, p.y) * (u_focal / viewZ) * u_fit;
   gl_Position = vec4(ndc, 0.0, 1.0);
 
   // A connection reads more strongly the closer its endpoints are. In the

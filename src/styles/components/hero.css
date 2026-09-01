@@ -26,14 +26,20 @@
   opacity: 1;
 }
 
+@media (max-width: 719px) {
+  .hero__canvas.is-live {
+    opacity: 0.75;
+  }
+}
+
 /* Keeps type legible over the brightest part of the field. */
 .hero__scrim {
   position: absolute;
   inset: 0;
   z-index: var(--z-canvas);
   background:
-    linear-gradient(to top, var(--c-bg) 2%, transparent 42%),
-    radial-gradient(120% 70% at 12% 62%, color-mix(in srgb, var(--c-bg) 82%, transparent), transparent 60%);
+    linear-gradient(to top, var(--c-bg) 4%, color-mix(in srgb, var(--c-bg) 62%, transparent) 52%, transparent 92%),
+    radial-gradient(150% 62% at 50% 48%, color-mix(in srgb, var(--c-bg) 74%, transparent), transparent 72%);
   pointer-events: none;
 }
 
@@ -128,23 +134,44 @@
   gap: var(--sp-3);
 }
 
+/*
+ * Dividers are drawn as borders on the cells, not as a 1px gap over a coloured
+ * parent. The gap trick paints the parent wherever a cell is missing, so an odd
+ * number of entries (there are five) left a phantom empty box in the last row.
+ *
+ * Separators are placed as border-*top* on the rows below the first, so nothing
+ * dangles under a short final row either — the count can change freely.
+ */
 .hero__telemetry {
   position: relative;
   z-index: var(--z-content);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
-  margin-top: var(--sp-7);
+  margin-top: var(--sp-6);
   border-top: 1px solid var(--c-line);
-  background: var(--c-line);
   text-transform: none;
 }
+
 .hero__telemetry > div {
   display: grid;
+  align-content: start;
   gap: 0.2rem;
-  padding: 0.8rem 0.9rem 0.8rem 0;
-  background: var(--c-bg);
+  /* No left padding in the first column, so it lines up with the hero text. */
+  padding: 0.8rem 0.9rem;
+  padding-left: 0;
 }
+
+/* Row separators: every cell below the first row. */
+.hero__telemetry > div:nth-child(n + 3) {
+  border-top: 1px solid var(--c-line);
+}
+
+/* Column separators: every column after the first. */
+.hero__telemetry > div:not(:nth-child(2n + 1)) {
+  padding-left: 0.9rem;
+  border-left: 1px solid var(--c-line);
+}
+
 .hero__telemetry dt {
   font-size: var(--fs-mono-sm);
   letter-spacing: var(--tracking-mono);
@@ -214,11 +241,38 @@
   .hero__telemetry {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+  .hero__telemetry > div:nth-child(n + 3) {
+    border-top: 0;
+  }
+  .hero__telemetry > div:nth-child(n + 4) {
+    border-top: 1px solid var(--c-line);
+  }
+  .hero__telemetry > div:not(:nth-child(2n + 1)) {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .hero__telemetry > div:not(:nth-child(3n + 1)) {
+    padding-left: 0.9rem;
+    border-left: 1px solid var(--c-line);
+  }
 }
 
 @media (min-width: 1024px) {
   .hero__telemetry {
     grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  /* One row at this width: no horizontal rules at all. */
+  .hero__telemetry > div:nth-child(n + 3),
+  .hero__telemetry > div:nth-child(n + 4) {
+    border-top: 0;
+  }
+  .hero__telemetry > div:not(:nth-child(3n + 1)) {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .hero__telemetry > div:not(:nth-child(5n + 1)) {
+    padding-left: 0.9rem;
+    border-left: 1px solid var(--c-line);
   }
   .hero__hint {
     display: flex;

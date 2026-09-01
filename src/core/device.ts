@@ -111,11 +111,18 @@ export const device = {
     return this.canHover && !this.touch && window.innerWidth >= 900;
   },
 
-  /** Particle budget for the hero field. */
+  /**
+   * Particle budget for the hero field.
+   *
+   * A portrait viewport crops into the middle of the field rather than showing
+   * more of it, so the same count reads several times denser on a phone than
+   * on a desktop. Budget for what is actually on screen, not for the device.
+   */
   get particleBudget(): number {
-    if (this.tier === "high") return window.innerWidth >= 1600 ? 900 : 700;
+    if (this.tier === "low") return 0;
+    if (window.innerWidth < 720) return 240;
     if (this.tier === "medium") return 320;
-    return 0;
+    return window.innerWidth >= 1600 ? 900 : 700;
   },
 };
 

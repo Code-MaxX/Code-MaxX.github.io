@@ -194,7 +194,7 @@ function uniforms(gl: WebGL2RenderingContext, program: WebGLProgram, names: stri
 
 const SHARED_UNIFORMS = [
   "u_time", "u_morph", "u_rot", "u_focal", "u_aspect", "u_camZ",
-  "u_pointer", "u_pointerAmp", "u_accent", "u_accent2", "u_opacity",
+  "u_pointer", "u_pointerAmp", "u_fit", "u_accent", "u_accent2", "u_opacity",
 ];
 
 export class SystemField {
@@ -439,6 +439,10 @@ export class SystemField {
     gl.uniform1f(u["u_camZ"]!, CAM_Z - this.morph * 0.75);
     gl.uniform2f(u["u_pointer"]!, this.pointerX, this.pointerY);
     gl.uniform1f(u["u_pointerAmp"]!, 0.55);
+    // Dividing x by a portrait aspect magnifies the field, so a phone sees a
+    // narrow slice of the middle instead of the whole system — which is why it
+    // read as a dense hairball. Pull most of that magnification back out.
+    gl.uniform1f(u["u_fit"]!, this.aspect < 1 ? 1 - 0.62 * (1 - this.aspect) : 1);
     gl.uniform3fv(u["u_accent"]!, this.accent);
     gl.uniform3fv(u["u_accent2"]!, this.accent2);
     gl.uniform1f(u["u_opacity"]!, this.opacity);
