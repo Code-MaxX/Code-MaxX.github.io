@@ -103,6 +103,17 @@
   transform: translateX(2px);
 }
 
+/*
+ * A keycap hint is a promise the device cannot keep. Below the breakpoint
+ * there is no ⌘K to press, so the button keeps its label and drops the chips.
+ * (The nav's own control swaps to "Menu" at the same width.)
+ */
+@media (max-width: 719px) {
+  .btn kbd {
+    display: none;
+  }
+}
+
 /* --- Chips --------------------------------------------------------------- */
 .chips {
   display: flex;
