@@ -18,7 +18,7 @@ const hoverQuery = mq("(hover: hover)");
 
 type NavigatorWithHints = Navigator & {
   deviceMemory?: number;
-  connection?: { saveData?: boolean; effectiveType?: string };
+  connection?: { saveData?: boolean };
 };
 
 const nav = navigator as NavigatorWithHints;
@@ -47,9 +47,13 @@ function computeTier(): Tier {
   const memory = nav.deviceMemory ?? 4;
   const coarse = coarsePointerQuery?.matches ?? false;
   const narrow = window.innerWidth < 720;
-  const slowNetwork = /(^|-)2g$/.test(nav.connection?.effectiveType ?? "");
 
-  if (slowNetwork || cores <= 2 || memory <= 2) return "low";
+  // Deliberately not keyed on connection speed. A slow link is a reason not to
+  // *fetch* something expensive; it says nothing about whether this GPU can
+  // draw a few hundred points, and the renderer is 4 kB gzip. Judging the tier
+  // on `effectiveType` throttled capable desktops down to the static hero.
+  // `saveData` above is different: that is the user asking for less.
+  if (cores <= 2 || memory <= 2) return "low";
   if (coarse || narrow || cores <= 4 || memory <= 4) return "medium";
   return "high";
 }
