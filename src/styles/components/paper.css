@@ -1,0 +1,121 @@
+/* ============================================================================
+   RESEARCH — a publication that unfolds like a technical document
+   ========================================================================== */
+
+.paper {
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-md);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--c-surface-1) 90%, transparent), transparent 60%),
+    var(--c-bg);
+  overflow: hidden;
+}
+
+.paper__summary {
+  display: grid;
+  gap: var(--sp-3);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  cursor: pointer;
+  list-style: none;
+  position: relative;
+  transition: background var(--dur-2) var(--ease-out);
+}
+.paper__summary::-webkit-details-marker { display: none; }
+.paper__summary:hover {
+  background: color-mix(in srgb, var(--c-surface-1) 55%, transparent);
+}
+.paper__summary:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: -3px;
+}
+
+/* Fold line: the sheet is creased where it opens. */
+.paper__summary::after {
+  content: "";
+  position: absolute;
+  left: clamp(1.25rem, 3vw, 2rem);
+  right: clamp(1.25rem, 3vw, 2rem);
+  bottom: 0;
+  height: 1px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--c-line-strong) 0 6px,
+    transparent 6px 12px
+  );
+}
+
+.paper__stamp {
+  justify-self: start;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--c-line-accent);
+  border-radius: var(--r-xs);
+  font-size: 0.5625rem;
+  color: var(--c-accent);
+}
+
+.paper__title {
+  font-size: clamp(1.15rem, 2.6vw, 1.65rem);
+  font-weight: 500;
+  max-width: 54ch;
+}
+
+.paper__venue {
+  font-size: var(--fs-mono-sm);
+  color: var(--c-fg-faint);
+  text-transform: none;
+  letter-spacing: 0.06em;
+  max-width: 60ch;
+}
+
+.paper__toggle {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: var(--sp-2);
+  font-size: var(--fs-mono-sm);
+  color: var(--c-accent);
+}
+.paper__toggle::before {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: currentColor;
+  transition: width var(--dur-2) var(--ease-out);
+}
+.paper__summary:hover .paper__toggle::before { width: 30px; }
+.paper__toggle-close { display: none; }
+.paper[open] .paper__toggle-open { display: none; }
+.paper[open] .paper__toggle-close { display: inline; }
+
+.paper__body {
+  display: grid;
+  gap: var(--sp-5);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  color: var(--c-fg-dim);
+}
+.paper[open] .paper__body {
+  animation: paper-unfold 520ms var(--ease-out);
+}
+@keyframes paper-unfold {
+  from { opacity: 0; transform: translateY(-8px) scaleY(0.985); transform-origin: top; }
+  to { opacity: 1; transform: none; }
+}
+
+.paper__col {
+  display: grid;
+  gap: var(--sp-3);
+  align-content: start;
+}
+.paper__col .label { color: var(--c-accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .paper[open] .paper__body { animation: none; }
+}
+
+@media (min-width: 760px) {
+  .paper__body {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: var(--sp-7);
+  }
+}

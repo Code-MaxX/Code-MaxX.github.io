@@ -1,0 +1,43 @@
+/* ============================================================================
+   REVEAL — the entrance vocabulary.
+
+   Hidden states apply only under `.js-motion`, which the module sets on the
+   document element before first paint. No script, nothing hidden.
+   ========================================================================== */
+
+.js-motion [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition:
+    opacity var(--dur-4) var(--ease-out),
+    transform var(--dur-4) var(--ease-out);
+  transition-delay: calc(var(--reveal-i, 0) * 55ms);
+  will-change: opacity, transform;
+}
+
+.js-motion [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* Clip-path variant: a panel wiping into existence rather than fading. */
+.js-motion [data-reveal="mask"] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path var(--dur-4) var(--ease-tech);
+}
+.js-motion [data-reveal="mask"].is-revealed {
+  clip-path: inset(0 0 0 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-motion [data-reveal],
+  .js-motion [data-reveal="mask"] {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    transition: none;
+  }
+}

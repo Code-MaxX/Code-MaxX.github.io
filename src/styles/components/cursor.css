@@ -1,0 +1,104 @@
+/* ============================================================================
+   CUSTOM CURSOR — precise by default, informative on demand
+   ========================================================================== */
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-cursor);
+  pointer-events: none;
+  will-change: transform;
+  mix-blend-mode: difference;
+}
+
+.cursor__dot {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.cursor__ring {
+  position: absolute;
+  top: -13px;
+  left: -13px;
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgb(255 255 255 / 0.5);
+  border-radius: 50%;
+  transition:
+    width var(--dur-2) var(--ease-out),
+    height var(--dur-2) var(--ease-out),
+    top var(--dur-2) var(--ease-out),
+    left var(--dur-2) var(--ease-out),
+    border-radius var(--dur-2) var(--ease-out),
+    opacity var(--dur-2) var(--ease-out);
+}
+
+.cursor__label {
+  position: absolute;
+  top: -8px;
+  left: 0;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0;
+  white-space: nowrap;
+  transition: opacity var(--dur-2) var(--ease-out);
+}
+
+/* Link: the ring opens up a little. */
+.cursor[data-state="link"] .cursor__ring {
+  width: 40px;
+  height: 40px;
+  top: -20px;
+  left: -20px;
+}
+
+/* Labelled states: the ring becomes a chip that names the action. */
+.cursor[data-state="project"] .cursor__ring,
+.cursor[data-state="inspect"] .cursor__ring,
+.cursor[data-state="drag"] .cursor__ring {
+  width: 74px;
+  height: 26px;
+  top: -13px;
+  left: -37px;
+  border-radius: 3px;
+}
+.cursor[data-state="project"] .cursor__label,
+.cursor[data-state="inspect"] .cursor__label,
+.cursor[data-state="drag"] .cursor__label {
+  opacity: 1;
+  top: -5px;
+}
+.cursor[data-state="project"] .cursor__dot,
+.cursor[data-state="inspect"] .cursor__dot,
+.cursor[data-state="drag"] .cursor__dot {
+  opacity: 0;
+}
+
+.cursor.is-down .cursor__ring {
+  transform: scale(0.86);
+}
+.cursor.is-hidden {
+  opacity: 0;
+}
+
+/* Hide the native pointer only once the custom one is actually running. */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor { display: none; }
+  html.has-cursor,
+  html.has-cursor * { cursor: auto !important; }
+}

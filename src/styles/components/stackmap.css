@@ -1,0 +1,277 @@
+/* ============================================================================
+   STACK — the systems map
+   ========================================================================== */
+
+.stackmap {
+  display: grid;
+  gap: var(--sp-5);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-md);
+  background:
+    radial-gradient(100% 80% at 50% 0%, color-mix(in srgb, var(--c-surface-1) 85%, transparent), transparent 72%),
+    var(--c-bg);
+  overflow: hidden;
+}
+
+.stackmap__stage {
+  position: relative;
+  min-height: 260px;
+  padding: var(--sp-4);
+}
+
+.stackmap__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.stack-edge {
+  stroke: var(--c-line-strong);
+  stroke-width: 1;
+  transition: stroke var(--dur-2) var(--ease-out), opacity var(--dur-2) var(--ease-out);
+}
+.stack-edge.is-hot {
+  stroke: var(--c-accent);
+  stroke-width: 1.6;
+}
+
+.stack-node { cursor: pointer; }
+.stack-node__halo {
+  fill: rgb(var(--c-accent-rgb) / 0.08);
+  opacity: 0;
+  transition: opacity var(--dur-2) var(--ease-out);
+}
+.stack-node__dot {
+  fill: var(--c-surface-3);
+  stroke: var(--c-line-strong);
+  stroke-width: 1.25;
+  transition: fill var(--dur-2) var(--ease-out), stroke var(--dur-2) var(--ease-out);
+}
+.stack-node__label {
+  fill: var(--c-fg-dim);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  text-anchor: middle;
+  pointer-events: none;
+  transition: fill var(--dur-2) var(--ease-out);
+}
+.stack-node[data-weight="3"] .stack-node__label {
+  fill: var(--c-fg);
+  font-size: 14px;
+}
+
+.stack-node:hover .stack-node__dot,
+.stack-node:focus-visible .stack-node__dot,
+.stack-node.is-active .stack-node__dot {
+  fill: var(--c-accent);
+  stroke: var(--c-accent-bright);
+}
+.stack-node:hover .stack-node__halo,
+.stack-node:focus-visible .stack-node__halo,
+.stack-node.is-active .stack-node__halo {
+  opacity: 1;
+}
+.stack-node:hover .stack-node__label,
+.stack-node:focus-visible .stack-node__label,
+.stack-node.is-active .stack-node__label {
+  fill: var(--c-accent-bright);
+}
+.stack-node:focus-visible { outline: none; }
+.stack-node:focus-visible .stack-node__dot { stroke-width: 2.5; }
+
+.stack-node.is-linked .stack-node__dot {
+  stroke: var(--c-line-accent);
+}
+.stack-node.is-linked .stack-node__label {
+  fill: var(--c-fg);
+}
+
+.stackmap__stage.is-inspecting .stack-node:not(.is-active):not(.is-linked),
+.stackmap__stage.is-inspecting .stack-edge:not(.is-hot) {
+  opacity: 0.22;
+}
+.stack-node { transition: opacity var(--dur-2) var(--ease-out); }
+
+/* --- Readout panel ------------------------------------------------------- */
+.stackmap__panel {
+  display: grid;
+  align-content: start;
+  gap: var(--sp-3);
+  padding: clamp(1.15rem, 3vw, 1.6rem);
+  border-top: 1px solid var(--c-line);
+  background: color-mix(in srgb, var(--c-surface-1) 55%, transparent);
+  min-height: 12rem;
+}
+
+/* Idle readout: the panel says something useful before anything is selected. */
+.stackmap__legend {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-fg-dim);
+}
+.stackmap__legend li {
+  display: grid;
+  grid-template-columns: 8px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.6rem;
+}
+.stackmap__swatch {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c-fg-faint);
+}
+.stackmap__swatch.is-language { background: var(--c-accent); }
+.stackmap__swatch.is-api { background: color-mix(in srgb, var(--c-accent) 70%, var(--c-fg)); }
+.stackmap__swatch.is-data { background: var(--c-accent-2); }
+.stackmap__swatch.is-async { background: color-mix(in srgb, var(--c-accent) 45%, var(--c-fg-faint)); }
+.stackmap__swatch.is-ml { background: var(--c-warn); }
+.stackmap__count { color: var(--c-fg-faint); }
+
+.stackmap__empty {
+  font-size: var(--fs-mono-sm);
+  color: var(--c-fg-faint);
+}
+
+.stackmap__name {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  color: var(--c-accent);
+}
+
+.stackmap__group {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--c-fg-faint);
+}
+
+.stackmap__role {
+  color: var(--c-fg);
+  font-size: var(--fs-sm);
+}
+
+/* The chain: technology → where it ran → what it enabled. */
+.stackmap__chain {
+  display: grid;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: 0.06em;
+}
+.stackmap__chain li {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  color: var(--c-fg-dim);
+}
+.stackmap__chain li::before {
+  content: "↳";
+  color: var(--c-accent-deep);
+  flex: none;
+}
+.stackmap__chain li:first-child::before {
+  content: "◆";
+  color: var(--c-accent);
+}
+
+.stackmap__outcome {
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--c-line);
+  font-size: var(--fs-sm);
+  color: var(--c-fg-dim);
+}
+
+.stack-list {
+  margin-top: var(--sp-5);
+}
+/* When the map renders, the flat list becomes redundant for sighted users but
+   stays in the accessibility tree. */
+.stackmap.is-enhanced ~ .stack-list {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (min-width: 900px) {
+  .stackmap {
+    grid-template-columns: minmax(0, 1fr) 21rem;
+    gap: 0;
+  }
+  .stackmap__stage {
+    padding: var(--sp-5);
+  }
+  .stackmap__panel {
+    border-top: 0;
+    border-left: 1px solid var(--c-line);
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Mobile counterpart to the graph — the same data, laid out to be read.
+   -------------------------------------------------------------------------- */
+
+.stack-cards {
+  display: grid;
+  gap: 1px;
+  background: var(--c-line);
+  border-top: 1px solid var(--c-line);
+}
+
+.stack-cards__group {
+  padding: 1.1rem var(--sp-4) 0.4rem;
+  background: var(--c-bg);
+  font-size: 0.5625rem;
+  color: var(--c-accent);
+}
+
+.stack-cards__item {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.9rem var(--sp-4) 1.1rem;
+  background: var(--c-bg);
+}
+
+.stack-cards__name {
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--c-fg);
+}
+
+.stack-cards__role {
+  font-size: var(--fs-sm);
+  color: var(--c-fg-dim);
+}
+
+.stack-cards__outcome {
+  padding-left: var(--sp-3);
+  border-left: 1px solid var(--c-line-accent);
+  font-size: var(--fs-sm);
+  color: var(--c-fg-faint);
+}
+
+/* Below the breakpoint the graph steps aside; above it, the cards do. */
+@media (max-width: 899px) {
+  .stackmap__stage,
+  .stackmap__panel {
+    display: none;
+  }
+}
+
+@media (min-width: 900px) {
+  .stack-cards {
+    display: none;
+  }
+}

@@ -1,0 +1,120 @@
+/* ============================================================================
+   DESIGN TOKENS
+   Single source of truth for colour, type, space, motion and elevation.
+   Everything downstream references these — no raw hex outside this file.
+   ========================================================================== */
+
+:root {
+  /* --- Surface ramp: near-black, slightly cool ---------------------------- */
+  --c-void: #04060a;
+  --c-bg: #06090d;
+  --c-surface-1: #0a0e14;
+  --c-surface-2: #0e131b;
+  --c-surface-3: #141a24;
+
+  /* --- Hairlines --------------------------------------------------------- */
+  --c-line: rgb(255 255 255 / 0.06);
+  --c-line-strong: rgb(255 255 255 / 0.12);
+  --c-line-accent: rgb(79 232 176 / 0.28);
+
+  /* --- Foreground -------------------------------------------------------- */
+  --c-fg: #e9edf2;
+  --c-fg-dim: #98a3b3;
+  --c-fg-faint: #5e6877;
+
+  /* --- Accent: one primary signal colour --------------------------------- */
+  --c-accent: #4fe8b0;
+  --c-accent-rgb: 79 232 176;
+  --c-accent-bright: #86ffd0;
+  --c-accent-deep: #1f8f6c;
+
+  /* --- Secondary accent: used sparingly, for "other system" data --------- */
+  --c-accent-2: #7189ff;
+  --c-accent-2-rgb: 113 137 255;
+
+  /* --- Status ------------------------------------------------------------ */
+  --c-warn: #f0a63c;
+  --c-live: var(--c-accent);
+
+  /* --- Type -------------------------------------------------------------- */
+  --font-sans: "Geist", "Inter Tight", "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --fs-display: clamp(3rem, min(12.5vw, 16svh), 11rem);
+  --fs-h1: clamp(2.4rem, 6vw, 4.6rem);
+  --fs-h2: clamp(1.9rem, 4.2vw, 3.2rem);
+  --fs-h3: clamp(1.15rem, 2vw, 1.5rem);
+  --fs-lead: clamp(1rem, 1.5vw, 1.2rem);
+  --fs-body: 0.9875rem;
+  --fs-sm: 0.8125rem;
+  --fs-mono: 0.75rem;
+  --fs-mono-sm: 0.6875rem;
+
+  --tracking-display: -0.045em;
+  --tracking-tight: -0.025em;
+  --tracking-mono: 0.14em;
+
+  /* --- Space ------------------------------------------------------------- */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+  --sp-10: 8rem;
+
+  --shell-x: clamp(1.15rem, 4.5vw, 4.5rem);
+  --shell-max: 1440px;
+  --measure: 62ch;
+  --nav-h: 56px;
+  --rail-w: 34px;
+
+  /* --- Radius: small and technical, never pill --------------------------- */
+  --r-xs: 2px;
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 14px;
+
+  /* --- Motion ------------------------------------------------------------ */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-tech: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-1: 120ms;
+  --dur-2: 240ms;
+  --dur-3: 420ms;
+  --dur-4: 720ms;
+
+  /* --- Depth ------------------------------------------------------------- */
+  --shadow-panel: 0 24px 70px -20px rgb(0 0 0 / 0.75);
+  --glow-accent: 0 0 24px -4px rgb(var(--c-accent-rgb) / 0.35);
+
+  /* --- Layers ------------------------------------------------------------ */
+  --z-canvas: 0;
+  --z-content: 1;
+  --z-rail: 40;
+  --z-nav: 50;
+  --z-overlay: 80;
+  --z-palette: 90;
+  --z-cursor: 100;
+  --z-boot: 110;
+
+  color-scheme: dark;
+}
+
+/* Motion budget is a token too: components read it instead of re-querying. */
+:root {
+  --motion-scale: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-scale: 0;
+    --dur-1: 0ms;
+    --dur-2: 0ms;
+    --dur-3: 0ms;
+    --dur-4: 0ms;
+  }
+}

@@ -1,0 +1,366 @@
+/* ============================================================================
+   EXPERIENCE — timeline, roles and the architecture visualisations
+   ========================================================================== */
+
+.timeline {
+  display: grid;
+  /* Without an explicit `minmax(0, …)` the implicit auto track inherits the
+     architecture diagram's 720px min-width and blows the page out sideways
+     on narrow viewports. */
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.role {
+  position: relative;
+  padding-block: clamp(2.5rem, 7vw, 5rem);
+  border-top: 1px solid var(--c-line);
+}
+.role:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.role__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.75rem, 4vw, 3rem);
+}
+
+.role__idx {
+  font-size: var(--fs-mono-sm);
+  color: var(--c-accent);
+  margin-bottom: var(--sp-3);
+}
+
+.role__company {
+  font-size: clamp(1.75rem, 3.4vw, 2.6rem);
+  font-weight: 500;
+  letter-spacing: var(--tracking-tight);
+}
+
+.role__title {
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  color: var(--c-fg-dim);
+  margin-top: 0.2rem;
+}
+
+.role__meta {
+  font-size: var(--fs-mono-sm);
+  color: var(--c-fg-faint);
+  margin-top: var(--sp-3);
+}
+
+.role__system {
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--c-line);
+  color: var(--c-fg-dim);
+  font-size: var(--fs-sm);
+  max-width: 46ch;
+}
+.role__system .label {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+.role__system strong {
+  color: var(--c-fg);
+  font-weight: 600;
+}
+
+/* --- Metrics ------------------------------------------------------------- */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: var(--sp-5);
+  background: var(--c-line);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+
+.metrics li:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.metrics li {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.85rem 0.95rem;
+  background: var(--c-bg);
+}
+
+.metrics__v {
+  font-family: var(--font-mono);
+  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  font-weight: 500;
+  color: var(--c-accent);
+  letter-spacing: -0.02em;
+  font-feature-settings: "tnum" 1;
+}
+
+.metrics__l {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-fg-faint);
+}
+
+/* --- Impact list --------------------------------------------------------- */
+.impact {
+  display: grid;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-5);
+}
+
+.impact li {
+  position: relative;
+  padding-left: 1.5rem;
+  color: var(--c-fg-dim);
+  max-width: 68ch;
+}
+.impact li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 8px;
+  height: 1px;
+  background: var(--c-accent);
+  opacity: 0.75;
+}
+.impact strong {
+  color: var(--c-fg);
+  font-weight: 500;
+}
+
+/* --- Architecture figure ------------------------------------------------- */
+.arch {
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+  margin-inline: auto;
+  width: 100%;
+  max-width: var(--shell-max);
+  padding-inline: var(--shell-x);
+}
+
+.arch__caption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--c-line);
+}
+
+.arch__hint {
+  font-size: 0.5625rem;
+  color: var(--c-fg-faint);
+}
+
+.arch__stage {
+  position: relative;
+  max-width: 100%;
+  margin-top: var(--sp-4);
+  padding: var(--sp-4) var(--sp-3);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-md);
+  /* Schematic paper: a fine measuring grid under the diagram. */
+  background:
+    radial-gradient(120% 100% at 50% 0%, color-mix(in srgb, var(--c-surface-1) 90%, transparent), transparent 70%),
+    linear-gradient(to right, var(--c-line) 1px, transparent 1px) 0 0 / 44px 44px,
+    linear-gradient(to bottom, var(--c-line) 1px, transparent 1px) 0 0 / 44px 44px,
+    var(--c-bg);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.arch__svg {
+  display: block;
+  min-width: 720px;
+  width: 100%;
+  height: auto;
+}
+
+.arch__readout {
+  min-height: 3.2em;
+  margin-top: var(--sp-4);
+  padding-left: var(--sp-4);
+  border-left: 1px solid var(--c-line-accent);
+  font-size: var(--fs-sm);
+  color: var(--c-fg-dim);
+  max-width: 72ch;
+}
+.arch__readout:empty::before {
+  content: "Idle — no node selected.";
+  color: var(--c-fg-faint);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+}
+.arch__readout strong {
+  display: block;
+  color: var(--c-fg);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+/* --- SVG graph internals ------------------------------------------------- */
+.arch-edge__line {
+  fill: none;
+  stroke: var(--c-line-strong);
+  stroke-width: 1.25;
+  transition: stroke var(--dur-2) var(--ease-out), stroke-width var(--dur-2);
+}
+.arch-edge__head {
+  fill: var(--c-line-strong);
+  transition: fill var(--dur-2) var(--ease-out);
+}
+
+/*
+ * Packets in transit. `pathLength="100"` normalises every edge, so one
+ * keyframe drives a dot along a 90px link and a 600px link at the same
+ * apparent speed. Only runs while the diagram is on screen.
+ */
+.arch-edge__flow {
+  fill: none;
+  stroke: var(--c-accent-bright);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 1.5 98.5;
+  opacity: 0;
+}
+.arch__stage.is-live .arch-edge__flow {
+  opacity: 0.75;
+  animation: arch-packet 3.4s linear infinite;
+}
+@keyframes arch-packet {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+.arch-edge__label {
+  fill: var(--c-fg-faint);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  /* Knock the label out of the wire it sits on rather than boxing it. */
+  stroke: var(--c-bg);
+  stroke-width: 3.5;
+  paint-order: stroke fill;
+  opacity: 0.55;
+  transition: opacity var(--dur-2) var(--ease-out), fill var(--dur-2);
+}
+.arch-edge.is-hot .arch-edge__line {
+  stroke: var(--c-line-accent);
+  stroke-width: 1.75;
+}
+.arch-edge.is-hot .arch-edge__head {
+  fill: var(--c-accent);
+}
+.arch-edge.is-hot .arch-edge__label {
+  opacity: 1;
+  fill: var(--c-fg-dim);
+}
+
+.arch-node {
+  cursor: pointer;
+}
+.arch-node__box {
+  fill: var(--c-surface-2);
+  stroke: var(--c-line-strong);
+  stroke-width: 1;
+  transition: stroke var(--dur-2) var(--ease-out), fill var(--dur-2) var(--ease-out);
+}
+.arch-node__label {
+  fill: var(--c-fg);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  pointer-events: none;
+}
+.arch-node__sub {
+  fill: var(--c-fg-faint);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.arch-node__kind {
+  fill: var(--c-accent);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.arch-node__pip {
+  fill: var(--c-accent);
+}
+
+.arch-node:hover .arch-node__box,
+.arch-node:focus-visible .arch-node__box,
+.arch-node.is-active .arch-node__box {
+  stroke: var(--c-accent);
+  fill: color-mix(in srgb, var(--c-accent) 8%, var(--c-surface-2));
+}
+.arch-node:focus-visible {
+  outline: none;
+}
+.arch-node:focus-visible .arch-node__box {
+  stroke-width: 2;
+}
+
+/* Dimming everything else is how a graph answers "what touches this?". */
+.arch__stage.is-inspecting .arch-node:not(.is-active):not(.is-linked) {
+  opacity: 0.28;
+}
+.arch__stage.is-inspecting .arch-edge:not(.is-hot) {
+  opacity: 0.18;
+}
+.arch-node,
+.arch-edge {
+  transition: opacity var(--dur-2) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arch__stage.is-live .arch-edge__flow {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .metrics {
+    grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  }
+  .metrics li:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .role__grid {
+    grid-template-columns: minmax(0, 27rem) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+  }
+  .role__head {
+    position: sticky;
+    top: calc(var(--nav-h) + 2.5rem);
+    align-self: start;
+  }
+  .metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .arch__svg {
+    min-width: 0;
+  }
+}

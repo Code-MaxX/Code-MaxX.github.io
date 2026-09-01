@@ -1,0 +1,232 @@
+/* ============================================================================
+   HERO — the system field and the identity that sits inside it
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  align-items: end;
+  padding-block: calc(var(--nav-h) + var(--sp-6)) var(--sp-5);
+  overflow: clip;
+}
+
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-canvas);
+  opacity: 0;
+  transition: opacity 1.2s var(--ease-out);
+  pointer-events: none;
+}
+.hero__canvas.is-live {
+  opacity: 1;
+}
+
+/* Keeps type legible over the brightest part of the field. */
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-canvas);
+  background:
+    linear-gradient(to top, var(--c-bg) 2%, transparent 42%),
+    radial-gradient(120% 70% at 12% 62%, color-mix(in srgb, var(--c-bg) 82%, transparent), transparent 60%);
+  pointer-events: none;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: var(--z-content);
+  align-self: center;
+  display: grid;
+  justify-items: start;
+}
+
+.hero__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--c-line-accent);
+  border-radius: 999px;
+  font-size: var(--fs-mono-sm);
+  color: var(--c-accent);
+  background: rgb(var(--c-accent-rgb) / 0.05);
+  margin-bottom: clamp(1rem, 3vw, 1.75rem);
+}
+
+.hero__name {
+  font-size: var(--fs-display);
+  font-weight: 500;
+  line-height: 0.86;
+  letter-spacing: var(--tracking-display);
+  margin-bottom: clamp(0.75rem, 2vw, 1.25rem);
+}
+
+.hero__line {
+  display: block;
+  overflow: hidden;
+}
+
+.hero__word {
+  display: block;
+  background: linear-gradient(
+    180deg,
+    var(--c-fg) 0%,
+    color-mix(in srgb, var(--c-fg) 72%, var(--c-bg)) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero__line:last-child .hero__word {
+  background: linear-gradient(
+    180deg,
+    var(--c-fg) 0%,
+    color-mix(in srgb, var(--c-accent) 42%, var(--c-fg-faint)) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Kinetic entrance: the name arrives one line at a time, masked by its own
+   overflow — a value being written, not an element sliding in. */
+.js-motion .hero__word {
+  transform: translate3d(0, 105%, 0);
+  animation: hero-word 1.05s var(--ease-out) forwards;
+}
+.js-motion .hero__line:nth-child(1) .hero__word { animation-delay: 0.12s; }
+.js-motion .hero__line:nth-child(2) .hero__word { animation-delay: 0.22s; }
+
+@keyframes hero-word {
+  to { transform: translate3d(0, 0, 0); }
+}
+
+.hero__role {
+  font-size: clamp(0.7rem, 1.4vw, 0.8125rem);
+  color: var(--c-accent);
+  letter-spacing: 0.22em;
+  margin-bottom: clamp(1.15rem, 3vw, 1.75rem);
+}
+
+.hero__statement {
+  max-width: 34ch;
+  font-size: clamp(1rem, 1.9vw, 1.3rem);
+  line-height: 1.5;
+  color: var(--c-fg-dim);
+  text-wrap: balance;
+  margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+
+.hero__telemetry {
+  position: relative;
+  z-index: var(--z-content);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: var(--sp-7);
+  border-top: 1px solid var(--c-line);
+  background: var(--c-line);
+  text-transform: none;
+}
+.hero__telemetry > div {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.8rem 0.9rem 0.8rem 0;
+  background: var(--c-bg);
+}
+.hero__telemetry dt {
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--c-fg-faint);
+}
+.hero__telemetry dd {
+  font-size: var(--fs-mono);
+  letter-spacing: 0.04em;
+  color: var(--c-fg);
+}
+
+.hero__hint {
+  position: relative;
+  z-index: var(--z-content);
+  display: none;
+  align-items: center;
+  justify-self: end;
+  gap: 0.6rem;
+  margin-inline: var(--shell-x);
+  margin-bottom: var(--sp-3);
+  font-size: var(--fs-mono-sm);
+  color: var(--c-fg-faint);
+}
+
+/*
+ * No WebGL — reduced motion, a low-power device, or no WebGL2. The hero keeps
+ * a static lattice so the composition still has a right-hand side, and the
+ * scroll hint goes away because there is no longer anything to resolve.
+ */
+.hero--static::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-canvas);
+  pointer-events: none;
+  background:
+    radial-gradient(circle, rgb(var(--c-accent-rgb) / 0.5) 0 1px, transparent 1.7px) 0 0 / 46px 46px,
+    radial-gradient(circle, rgb(var(--c-accent-2-rgb) / 0.4) 0 1px, transparent 1.7px) 23px 23px / 138px 138px;
+  mask-image: radial-gradient(62% 58% at 74% 46%, #000 4%, transparent 72%);
+  opacity: 0.55;
+}
+
+.hero--static .hero__hint {
+  display: none;
+}
+.hero__hint::after {
+  content: "";
+  width: 46px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--c-fg-faint), transparent);
+  animation: hint-sweep 2.4s var(--ease-in-out) infinite;
+}
+
+@keyframes hint-sweep {
+  0%, 100% { opacity: 0.25; transform: scaleX(0.6); transform-origin: left; }
+  50% { opacity: 1; transform: scaleX(1); transform-origin: left; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-motion .hero__word { transform: none; animation: none; }
+  .hero__hint::after { animation: none; }
+  .hero__canvas { transition: none; }
+}
+
+@media (min-width: 720px) {
+  .hero__telemetry {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero__telemetry {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .hero__hint {
+    display: flex;
+  }
+  .hero__scrim {
+    background:
+      linear-gradient(to top, var(--c-bg) 0%, transparent 34%),
+      linear-gradient(to right, var(--c-bg) 2%, color-mix(in srgb, var(--c-bg) 55%, transparent) 34%, transparent 58%),
+      radial-gradient(75% 75% at 8% 52%, color-mix(in srgb, var(--c-bg) 72%, transparent), transparent 64%);
+  }
+}

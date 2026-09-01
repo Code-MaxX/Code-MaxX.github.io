@@ -1,0 +1,373 @@
+/* ============================================================================
+   PROJECTS — case files
+   ========================================================================== */
+
+.cases {
+  display: grid;
+  gap: 1px;
+  background: var(--c-line);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+
+.case {
+  position: relative;
+  display: grid;
+  gap: var(--sp-3);
+  align-content: start;
+  padding: clamp(1.3rem, 3vw, 1.9rem);
+  background: var(--c-bg);
+  transform-style: preserve-3d;
+  transition: background var(--dur-3) var(--ease-out);
+}
+.case:hover {
+  background: color-mix(in srgb, var(--c-surface-1) 80%, var(--c-bg));
+}
+
+.case__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  font-size: var(--fs-mono-sm);
+  color: var(--c-fg-faint);
+}
+
+.case__status {
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--c-line-strong);
+  border-radius: var(--r-xs);
+  font-size: 0.5625rem;
+}
+.case__status[data-status="SHIPPED"] {
+  color: var(--c-accent);
+  border-color: var(--c-line-accent);
+}
+.case__status[data-status="RESEARCH"] {
+  color: var(--c-accent-2);
+  border-color: rgb(var(--c-accent-2-rgb) / 0.3);
+}
+
+/* Abstract system schematic — drawn per project by data-glyph. */
+.case__preview {
+  position: relative;
+  height: 92px;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-sm);
+  background:
+    linear-gradient(to right, var(--c-line) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(to bottom, var(--c-line) 1px, transparent 1px) 0 0 / 24px 24px,
+    var(--c-surface-1);
+  overflow: hidden;
+  transition: border-color var(--dur-3) var(--ease-out);
+}
+.case:hover .case__preview {
+  border-color: var(--c-line-accent);
+}
+.case__preview svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.case__preview .glyph-line {
+  fill: none;
+  stroke: var(--c-line-strong);
+  stroke-width: 1.25;
+  transition: stroke var(--dur-3) var(--ease-out);
+}
+.case:hover .case__preview .glyph-line {
+  stroke: var(--c-line-accent);
+}
+.case__preview .glyph-node {
+  fill: var(--c-surface-3);
+  stroke: var(--c-fg-faint);
+  stroke-width: 1;
+  transition: fill var(--dur-3), stroke var(--dur-3);
+}
+.case:hover .case__preview .glyph-node {
+  fill: color-mix(in srgb, var(--c-accent) 22%, var(--c-surface-3));
+  stroke: var(--c-accent);
+}
+/* Cursor-tracked highlight: the schematic responds to where you are. */
+.case__preview::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    120px 120px at var(--px, 50%) var(--py, 50%),
+    rgb(var(--c-accent-rgb) / 0.16),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity var(--dur-3) var(--ease-out);
+  pointer-events: none;
+}
+.case:hover .case__preview::after {
+  opacity: 1;
+}
+
+.case__title {
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+/* The heading's button covers the card so the whole file is clickable, while
+   the repo link stays above it and keeps its own target. */
+.case__open {
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  transition: color var(--dur-2) var(--ease-out);
+}
+.case__open::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.case:hover .case__open {
+  color: var(--c-accent-bright);
+}
+.case__open:focus-visible {
+  outline: none;
+}
+.case__open:focus-visible::after {
+  outline: 2px solid var(--c-accent);
+  outline-offset: -6px;
+  border-radius: var(--r-sm);
+}
+
+.case__domain {
+  font-size: var(--fs-mono-sm);
+  color: var(--c-fg-faint);
+}
+
+.case__summary {
+  color: var(--c-fg-dim);
+  font-size: var(--fs-sm);
+  max-width: 46ch;
+}
+
+.case__repo {
+  position: relative;
+  z-index: 2;
+  justify-self: start;
+  font-size: var(--fs-mono-sm);
+  color: var(--c-fg-faint);
+  border-bottom: 1px solid transparent;
+  transition: color var(--dur-2), border-color var(--dur-2);
+}
+.case__repo:hover {
+  color: var(--c-accent);
+  border-bottom-color: currentColor;
+}
+
+/* Tilt is applied by script via custom properties; CSS owns the transform. */
+.case {
+  transform: perspective(900px)
+    rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg))
+    translateZ(0);
+  transition:
+    transform 400ms var(--ease-out),
+    background var(--dur-3) var(--ease-out);
+}
+
+/* While the pointer is driving the tilt, the transition only has to smooth
+   pointer jitter — a 400ms ease here would feel like dragging a wet card. */
+.case.is-tilting {
+  transition: transform 90ms linear, background var(--dur-3) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case,
+  .case.is-tilting { transform: none; transition: background var(--dur-3); }
+  .case__preview::after { display: none; }
+}
+
+@media (min-width: 680px) {
+  .cases {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   CASE STUDY OVERLAY
+   -------------------------------------------------------------------------- */
+
+.study {
+  /* Same as the palette: never override the UA's `display: none` on a
+     closed <dialog>. */
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  max-width: none;
+  max-height: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  color: var(--c-fg);
+}
+
+.study[open] {
+  display: grid;
+  place-items: end center;
+}
+
+.study::backdrop {
+  background: color-mix(in srgb, var(--c-void) 82%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.study__panel {
+  position: relative;
+  width: min(920px, 100%);
+  max-height: 92svh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  border: 1px solid var(--c-line-strong);
+  border-bottom: 0;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  background: var(--c-surface-1);
+  box-shadow: var(--shadow-panel);
+  overflow: hidden;
+}
+
+.study[open] .study__panel {
+  animation: study-in 480ms var(--ease-out);
+}
+@keyframes study-in {
+  from { transform: translateY(26px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+.study__head {
+  display: grid;
+  gap: var(--sp-3);
+  padding: clamp(1.25rem, 3vw, 1.9rem);
+  border-bottom: 1px solid var(--c-line);
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgb(var(--c-accent-rgb) / 0.07), transparent 60%),
+    var(--c-surface-2);
+}
+
+.study__eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--c-accent);
+}
+
+.study__title {
+  font-size: clamp(1.4rem, 3.2vw, 2.1rem);
+  font-weight: 500;
+}
+
+.study__domain {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--c-fg-faint);
+}
+
+.study__close {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid var(--c-line-strong);
+  border-radius: var(--r-xs);
+  color: var(--c-fg-dim);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
+  transition: border-color var(--dur-2), color var(--dur-2);
+}
+.study__close:hover {
+  border-color: var(--c-line-accent);
+  color: var(--c-fg);
+}
+
+.study__body {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  display: grid;
+  gap: var(--sp-6);
+}
+
+.study__section {
+  display: grid;
+  gap: var(--sp-3);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.study__heading {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--c-accent);
+  padding-top: 0.2rem;
+  border-top: 1px solid var(--c-line-accent);
+}
+
+.study__text {
+  color: var(--c-fg-dim);
+  max-width: 66ch;
+}
+
+.study__list {
+  display: grid;
+  gap: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: 0.04em;
+  color: var(--c-fg-dim);
+}
+.study__list li {
+  display: flex;
+  gap: 0.6rem;
+}
+.study__list li::before {
+  content: "▸";
+  color: var(--c-accent-deep);
+  flex: none;
+}
+
+.study__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  align-items: center;
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--c-line);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .study[open] .study__panel { animation: none; }
+}
+
+@media (min-width: 760px) {
+  .study__section {
+    grid-template-columns: 10rem minmax(0, 1fr);
+    gap: var(--sp-5);
+  }
+  .study__heading {
+    border-top: 0;
+    padding-top: 0.3rem;
+  }
+}

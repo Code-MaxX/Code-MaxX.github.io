@@ -1,362 +1,800 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sahil Ghule — Backend & AI Systems Engineer</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Sahil Ghule — Backend &amp; AI Systems Engineer</title>
     <meta
       name="description"
-      content="Sahil Dilip Ghule — Backend & AI Systems Engineer. FastAPI, ClickHouse, distributed systems, RAG, and large-scale analytics."
+      content="Sahil Dilip Ghule — Backend &amp; AI Systems Engineer in Bengaluru. Distributed Python services on FastAPI, ClickHouse and async workers; large-scale analytics pipelines and production RAG."
     />
-    <meta name="theme-color" content="#0a0c10" />
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <meta name="author" content="Sahil Dilip Ghule" />
+    <meta name="theme-color" content="#06090d" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="canonical" href="https://code-maxx.github.io/" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content="Sahil Ghule — Backend &amp; AI Systems Engineer" />
+    <meta
+      property="og:description"
+      content="I build scalable backend systems, data-intensive platforms and AI-powered workflows."
+    />
+    <meta property="og:url" content="https://code-maxx.github.io/" />
+    <meta property="og:image" content="https://code-maxx.github.io/profile.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"
     />
-    <link rel="stylesheet" href="styles.css?v=2" />
-  </head>
-  <body>
-    <div class="bg-grid" aria-hidden="true"></div>
-    <div class="bg-glow" aria-hidden="true"></div>
 
-    <header class="nav">
-      <a class="nav__logo" href="#top">SG<span>.</span></a>
-      <nav class="nav__links" id="nav-links">
-        <a href="#about">About</a>
-        <a href="#experience">Experience</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Sahil Dilip Ghule",
+        "alternateName": "Sahil Ghule",
+        "jobTitle": "Software Engineer II",
+        "description": "Backend & AI Systems Engineer building distributed Python services, large-scale analytics pipelines and production AI workflows.",
+        "url": "https://code-maxx.github.io/",
+        "email": "mailto:work.sahilghule@gmail.com",
+        "address": { "@type": "PostalAddress", "addressLocality": "Bengaluru", "addressCountry": "IN" },
+        "worksFor": { "@type": "Organization", "name": "UrbanPiper" },
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "Vellore Institute of Technology, Bhopal" },
+        "knowsAbout": [
+          "Distributed systems", "Backend engineering", "FastAPI", "ClickHouse",
+          "Async job queues", "ETL pipelines", "Retrieval-Augmented Generation", "Python"
+        ],
+        "sameAs": [
+          "https://github.com/Code-MaxX",
+          "https://www.linkedin.com/in/sahil-ghule"
+        ]
+      }
+    </script>
+
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- Ambient field: fine grid, vignette, grain. Purely decorative. -->
+    <div class="field" aria-hidden="true">
+      <div class="field__grid"></div>
+      <div class="field__vignette"></div>
+      <div class="field__grain"></div>
+    </div>
+
+    <!--
+      Boot sequence. Present in the markup so it paints with the first frame,
+      and removed by a CSS animation with a hard 1.6s ceiling — if the module
+      never loads, the overlay still clears itself.
+    -->
+    <div class="boot" id="boot" role="status" aria-live="polite">
+      <div class="boot__inner">
+        <p class="boot__brand mono">SG — SYSTEM</p>
+        <ul class="boot__log mono" id="boot-log">
+          <li data-boot-line="INITIALIZING SYSTEM">INITIALIZING SYSTEM</li>
+          <li data-boot-line="LOADING EXPERIENCE">LOADING EXPERIENCE</li>
+          <li data-boot-line="CONNECTING MODULES">CONNECTING MODULES</li>
+          <li data-boot-line="MOUNTING PROJECTS">MOUNTING PROJECTS</li>
+          <li data-boot-line="SYSTEM READY">SYSTEM READY</li>
+        </ul>
+        <div class="boot__bar"><span class="boot__fill"></span></div>
+      </div>
+    </div>
+
+    <header class="nav" id="nav">
+      <a class="nav__mark" href="#top" data-scroll aria-label="Sahil Ghule — home">
+        <span class="nav__mark-glyph mono">SG</span>
+        <span class="nav__mark-meta">
+          <span class="nav__mark-name">Sahil Ghule</span>
+          <span class="nav__mark-role mono">Backend &amp; AI Systems</span>
+        </span>
+      </a>
+
+      <nav class="nav__links" aria-label="Sections">
+        <a href="#overview" data-scroll><span class="mono">01</span> Overview</a>
+        <a href="#experience" data-scroll><span class="mono">02</span> Experience</a>
+        <a href="#stack" data-scroll><span class="mono">03</span> Stack</a>
+        <a href="#projects" data-scroll><span class="mono">04</span> Projects</a>
+        <a href="#research" data-scroll><span class="mono">05</span> Research</a>
+        <a href="#contact" data-scroll><span class="mono">06</span> Contact</a>
       </nav>
-      <a class="btn btn--sm btn--ghost" href="https://github.com/Code-MaxX" target="_blank" rel="noopener">GitHub</a>
-      <button class="nav__toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span>
+
+      <button
+        class="nav__cmd mono"
+        data-open-palette
+        aria-haspopup="dialog"
+        aria-label="Open command palette"
+      >
+        <span class="nav__cmd-label nav__cmd-label--compact">Menu</span>
+        <span class="nav__cmd-label nav__cmd-label--full">Command</span>
+        <kbd>⌘</kbd><kbd>K</kbd>
       </button>
     </header>
 
-    <main id="top">
-      <section class="hero">
-        <div class="hero__grid">
-          <div>
-            <div class="hero__badge">
-              <span class="pulse"></span>
-              Open to impactful backend &amp; AI systems work
-            </div>
-            <p class="hero__eyebrow mono">Backend &amp; AI Systems Engineer</p>
-            <h1 class="hero__title">
-              Sahil Dilip<br />
-              <span class="gradient-text">Ghule</span>
-            </h1>
-            <p class="hero__lead">
-              I design and ship high-throughput backends, analytical pipelines, and AI-powered systems —
-              from ClickHouse-scale data platforms to RAG and async job infrastructure.
-            </p>
-            <div class="hero__cta">
-              <a class="btn btn--primary" href="#experience">View experience</a>
-              <a class="btn btn--ghost" href="mailto:work.sahilghule@gmail.com">Email me</a>
-            </div>
-          </div>
-          <div class="hero__photo-wrap">
-            <div class="hero__photo" aria-hidden="true">
-              <img src="assets/profile.png" alt="Sahil Ghule" width="640" height="640" />
-            </div>
-          </div>
-        </div>
-        <div class="hero__meta">
-          <div>
-            <span class="mono label">Location</span>
-            <strong>India · Bengaluru / Remote</strong>
-          </div>
-          <div>
-            <span class="mono label">Focus</span>
-            <strong>Distributed backends · Analytics · AI</strong>
-          </div>
-          <div>
-            <span class="mono label">Stack</span>
-            <strong>Python · FastAPI · ClickHouse</strong>
-          </div>
-        </div>
-      </section>
+    <!-- Scroll rail: section index + read progress. Desktop enhancement. -->
+    <aside class="rail" aria-hidden="true">
+      <span class="rail__track"><span class="rail__fill" id="rail-fill"></span></span>
+      <span class="rail__readout mono" id="rail-readout">00</span>
+    </aside>
 
-      <section id="about" class="section">
-        <div class="section__head">
-          <p class="mono label">01 — About</p>
-          <h2>Building systems that hold under real load</h2>
-        </div>
-        <div class="about-grid">
-          <div class="about-card glass">
-            <p>
-              I'm a software engineer focused on backend architecture, large-scale analytics, and
-              practical AI integration. Recently I've owned distributed platforms for availability
-              analytics, re-architected async workers for better concurrency, and shipped crawling,
-              ETL, and RAG-adjacent pipelines in production.
-            </p>
-            <p>
-              I care about clean service boundaries, query performance at scale, and tooling that
-              makes operational data actually useful for enterprise customers.
-            </p>
-          </div>
-          <div class="stat-grid">
-            <div class="stat glass">
-              <span class="stat__n">3+</span>
-              <span class="stat__l">Years shipping production systems</span>
-            </div>
-            <div class="stat glass">
-              <span class="stat__n">M+</span>
-              <span class="stat__l">Analytical records processed via ETL</span>
-            </div>
-            <div class="stat glass">
-              <span class="stat__n">AI</span>
-              <span class="stat__l">RAG, ML pricing &amp; training pipelines</span>
-            </div>
-            <div class="stat glass">
-              <span class="stat__n">B.Tech</span>
-              <span class="stat__l">CSE · AI &amp; ML · VIT Bhopal</span>
-            </div>
-          </div>
-        </div>
-      </section>
+    <main id="main">
+      <!-- ============================ HERO ============================ -->
+      <section class="hero" id="top">
+        <canvas class="hero__canvas" id="system-field" aria-hidden="true"></canvas>
+        <div class="hero__scrim" aria-hidden="true"></div>
 
-      <section id="experience" class="section">
-        <div class="section__head">
-          <p class="mono label">02 — Experience</p>
-          <h2>Where I've built</h2>
-        </div>
-        <div class="timeline">
-          <article class="job glass">
-            <div class="job__side">
-              <span class="job__role">Software Engineer-II</span>
-              <h3>UrbanPiper</h3>
-              <p class="mono job__meta">08/2025 – Present · Bengaluru</p>
-            </div>
-            <ul class="job__points">
-              <li>
-                Owned architecture and development of <strong>Periscope</strong> — a distributed
-                backend on FastAPI, ClickHouse, Python, and async workers.
-              </li>
-              <li>
-                Designed high-throughput analytics pipelines for large-scale availability events and
-                downtime analysis.
-              </li>
-              <li>
-                Migrated async job execution from RQ to <strong>ARQ</strong>, improving scalability,
-                concurrency, and maintainability.
-              </li>
-              <li>
-                Built scheduling/automation workflows, Playwright-based crawling pipelines, and ETL
-                systems processing millions of analytical records.
-              </li>
-            </ul>
-          </article>
-
-          <article class="job glass">
-            <div class="job__side">
-              <span class="job__role">Software Engineer</span>
-              <h3>Apperture AI</h3>
-              <p class="mono job__meta">05/2024 – 08/2025 · Remote</p>
-            </div>
-            <ul class="job__points">
-              <li>
-                Built backend services for analytical dashboards tracking store and item availability
-                across food delivery ecosystems.
-              </li>
-              <li>
-                Designed scalable analytical storage and query systems with
-                <strong>ClickHouse</strong>.
-              </li>
-              <li>
-                Delivered reusable <strong>GraphQL</strong> and <strong>gRPC</strong> services for
-                large-scale data access.
-              </li>
-              <li>
-                Automated AI training-data generation and integrated parameter extraction models
-                into a production <strong>RAG</strong> pipeline.
-              </li>
-            </ul>
-          </article>
-
-          <article class="job glass">
-            <div class="job__side">
-              <span class="job__role">SDE-1</span>
-              <h3>Cogoport</h3>
-              <p class="mono job__meta">02/2023 – 10/2023 · Mumbai</p>
-            </div>
-            <ul class="job__points">
-              <li>Built backend services powering logistics analytics dashboards.</li>
-              <li>
-                Developed ML-based dynamic pricing with <strong>Random Forest</strong> and shipped
-                predictive pricing into production for real-time recommendations.
-              </li>
-              <li>Worked on large operational datasets to improve pricing accuracy.</li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
-      <section id="skills" class="section">
-        <div class="section__head">
-          <p class="mono label">03 — Skills</p>
-          <h2>Tools I reach for</h2>
-        </div>
-        <div class="skills">
-          <div class="skill-card glass">
-            <h3>Languages</h3>
-            <div class="tags">
-              <span>Python</span><span>SQL</span><span>C++</span>
-            </div>
-          </div>
-          <div class="skill-card glass">
-            <h3>Data systems</h3>
-            <div class="tags">
-              <span>ClickHouse</span><span>PostgreSQL</span><span>MongoDB</span>
-            </div>
-          </div>
-          <div class="skill-card glass">
-            <h3>Backend &amp; APIs</h3>
-            <div class="tags">
-              <span>FastAPI</span><span>GraphQL</span><span>gRPC</span><span>Flask</span>
-            </div>
-          </div>
-          <div class="skill-card glass">
-            <h3>Infra &amp; tooling</h3>
-            <div class="tags">
-              <span>ARQ</span><span>Playwright</span><span>Git</span><span>ETL</span><span>RAG</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="projects" class="section">
-        <div class="section__head">
-          <p class="mono label">04 — Projects</p>
-          <h2>Selected work</h2>
-        </div>
-        <div class="projects">
-          <a
-            class="project glass"
-            href="https://github.com/Code-MaxX/Prostate_Cancer_Detector"
-            target="_blank"
-            rel="noopener"
-          >
-            <div class="project__top">
-              <span class="mono label">ML · Flask</span>
-              <span class="project__arrow">↗</span>
-            </div>
-            <h3>AI-powered Prostate Cancer Detection</h3>
-            <p>
-              Deep learning app predicting prostate cancer probability with Python, Flask, and DNN
-              models — deployed on cloud infrastructure.
-            </p>
-            <div class="tags tags--sm">
-              <span>Python</span><span>Flask</span><span>DNN</span>
-            </div>
-          </a>
-
-          <div class="project glass">
-            <div class="project__top">
-              <span class="mono label">ML · Analytics</span>
-            </div>
-            <h3>Power Plant Output Prediction</h3>
-            <p>
-              Machine learning models predicting full-load electrical power generation, focused on
-              operational efficiency via predictive analytics.
-            </p>
-            <div class="tags tags--sm">
-              <span>Python</span><span>ML</span><span>Regression</span>
-            </div>
-          </div>
-
-          <a
-            class="project glass"
-            href="https://github.com/Code-MaxX/blockchain-tiktok"
-            target="_blank"
-            rel="noopener"
-          >
-            <div class="project__top">
-              <span class="mono label">TypeScript · Web3</span>
-              <span class="project__arrow">↗</span>
-            </div>
-            <h3>Blockchain TikTok</h3>
-            <p>
-              A TikTok-style clone exploring decentralized media patterns — TypeScript frontend and
-              blockchain integration experiments.
-            </p>
-            <div class="tags tags--sm">
-              <span>TypeScript</span><span>Blockchain</span>
-            </div>
-          </a>
-
-          <a
-            class="project glass"
-            href="https://github.com/Code-MaxX/Data-Analytics-Projects"
-            target="_blank"
-            rel="noopener"
-          >
-            <div class="project__top">
-              <span class="mono label">Analytics</span>
-              <span class="project__arrow">↗</span>
-            </div>
-            <h3>Data Analytics Projects</h3>
-            <p>
-              Notebook-driven analytics work exploring real datasets, visualization, and insight
-              generation.
-            </p>
-            <div class="tags tags--sm">
-              <span>Jupyter</span><span>Python</span><span>SQL</span>
-            </div>
-          </a>
-        </div>
-      </section>
-
-      <section id="education" class="section section--tight">
-        <div class="section__head">
-          <p class="mono label">05 — Education &amp; publications</p>
-          <h2>Background</h2>
-        </div>
-        <div class="edu-grid">
-          <div class="glass edu">
-            <span class="mono label">Education</span>
-            <h3>Vellore Institute of Technology — Bhopal</h3>
-            <p>B.Tech · Computer Science Engineering</p>
-            <p class="muted">Specialization in Artificial Intelligence and Machine Learning</p>
-            <p class="mono job__meta">2019 – 2023 · Bhopal, India</p>
-          </div>
-          <div class="glass edu">
-            <span class="mono label">Publication</span>
-            <h3>5th International Conference on Intelligent Computing and Control Systems (ICICCS)</h3>
-            <p class="muted">Peer-reviewed conference publication</p>
-            <p class="mono job__meta">01/12/2020</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" class="section contact">
-        <div class="contact__card glass">
-          <p class="mono label">06 — Contact</p>
-          <h2>Let's build something solid</h2>
-          <p>
-            Open to conversations about backend platforms, analytics infrastructure, and AI systems
-            in production.
+        <div class="hero__inner shell">
+          <p class="hero__status mono">
+            <span class="dot" aria-hidden="true"></span><span data-scramble>SYSTEM ONLINE</span>
           </p>
-          <div class="contact__links">
-            <a class="btn btn--primary" href="mailto:work.sahilghule@gmail.com">work.sahilghule@gmail.com</a>
-            <a class="btn btn--ghost" href="https://linkedin.com/in/sahil-ghule" target="_blank" rel="noopener">LinkedIn</a>
-            <a class="btn btn--ghost" href="https://github.com/Code-MaxX" target="_blank" rel="noopener">GitHub</a>
-            <a class="btn btn--ghost" href="tel:+918830729336">+91 88307 29336</a>
+
+          <h1 class="hero__name">
+            <span class="hero__line"><span class="hero__word">SAHIL</span></span>
+            <span class="hero__line"><span class="hero__word">GHULE</span></span>
+          </h1>
+
+          <p class="hero__role mono">Backend &amp; AI Systems Engineer</p>
+
+          <p class="hero__statement">
+            I build systems that process data, power analytics, and turn complex workflows into
+            reliable software.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#overview" data-scroll data-cursor="link">
+              <span>EXPLORE SYSTEM</span>
+            </a>
+            <button class="btn btn--ghost" data-open-palette data-cursor="link">
+              <span>COMMAND</span><kbd>⌘</kbd><kbd>K</kbd>
+            </button>
+          </div>
+        </div>
+
+        <p class="hero__hint mono" aria-hidden="true">SCROLL TO RESOLVE ARCHITECTURE</p>
+
+        <dl class="hero__telemetry mono shell">
+          <div><dt>Location</dt><dd>Bengaluru, IN</dd></div>
+          <div><dt>Shipping</dt><dd>3+ years</dd></div>
+          <div><dt>Throughput</dt><dd>~1M events/day</dd></div>
+          <div><dt>Core stack</dt><dd>Python · FastAPI · ClickHouse</dd></div>
+          <div class="hero__telemetry-status"><dt>Status</dt><dd class="accent">AVAILABLE</dd></div>
+        </dl>
+
+      </section>
+
+      <!-- ========================== OVERVIEW ========================== -->
+      <section class="section" id="overview">
+        <div class="shell">
+          <header class="section__head">
+            <p class="section__index mono" data-scramble>01 / SYSTEM OVERVIEW</p>
+            <h2 class="section__title" data-reveal>Engineer profile</h2>
+            <p class="lead" data-reveal>
+              Backend engineer with 3+ years designing and owning Python services and data-intensive
+              platforms in production. I care about service boundaries that hold, query cost that is
+              designed rather than discovered, and async paths that stay predictable when the volume
+              arrives.
+            </p>
+          </header>
+
+          <div class="overview">
+            <ol class="caps" data-reveal-group>
+              <li class="cap" data-reveal>
+                <div class="cap__head">
+                  <h3 class="cap__domain">Backend Engineering</h3>
+                  <span class="cap__depth mono">Owned</span>
+                </div>
+                <div
+                  class="cap__bar"
+                  role="img"
+                  aria-label="Exercised in 3 production systems: Periscope, Apperture AI, Cogoport"
+                >
+                  <span class="cap__seg" data-system="Periscope"></span>
+                  <span class="cap__seg" data-system="Apperture AI"></span>
+                  <span class="cap__seg" data-system="Cogoport"></span>
+                </div>
+                <p class="cap__evidence">
+                  Own the architecture and development of a distributed analytics platform end to
+                  end; built reusable API surfaces other teams consume.
+                </p>
+                <ul class="chips chips--sm">
+                  <li>Python</li><li>FastAPI</li><li>GraphQL</li><li>gRPC</li><li>asyncio</li>
+                </ul>
+              </li>
+
+              <li class="cap" data-reveal>
+                <div class="cap__head">
+                  <h3 class="cap__domain">Distributed &amp; Async Systems</h3>
+                  <span class="cap__depth mono">Owned</span>
+                </div>
+                <div
+                  class="cap__bar"
+                  role="img"
+                  aria-label="Exercised in 2 production systems: Periscope, Apperture AI"
+                >
+                  <span class="cap__seg" data-system="Periscope"></span>
+                  <span class="cap__seg" data-system="Apperture AI"></span>
+                </div>
+                <p class="cap__evidence">
+                  Re-architected async job execution from RQ to ARQ — 3× worker concurrency and 42%
+                  faster end-to-end processing.
+                </p>
+                <ul class="chips chips--sm">
+                  <li>ARQ</li><li>RQ</li><li>Redis</li><li>Scheduling</li><li>Concurrency</li>
+                </ul>
+              </li>
+
+              <li class="cap" data-reveal>
+                <div class="cap__head">
+                  <h3 class="cap__domain">Data Systems</h3>
+                  <span class="cap__depth mono">Owned</span>
+                </div>
+                <div
+                  class="cap__bar"
+                  role="img"
+                  aria-label="Exercised in 3 production systems: Periscope, Apperture AI, Cogoport"
+                >
+                  <span class="cap__seg" data-system="Periscope"></span>
+                  <span class="cap__seg" data-system="Apperture AI"></span>
+                  <span class="cap__seg" data-system="Cogoport"></span>
+                </div>
+                <p class="cap__evidence">
+                  Analytical schema design, aggregation strategy and query tuning over datasets
+                  ingesting roughly a million events a day.
+                </p>
+                <ul class="chips chips--sm">
+                  <li>ClickHouse</li><li>PostgreSQL</li><li>MongoDB</li><li>SQL</li><li>ETL</li>
+                </ul>
+              </li>
+
+              <li class="cap" data-reveal>
+                <div class="cap__head">
+                  <h3 class="cap__domain">AI / RAG</h3>
+                  <span class="cap__depth mono">Shipped</span>
+                </div>
+                <div
+                  class="cap__bar"
+                  role="img"
+                  aria-label="Exercised in 2 production systems: Apperture AI, Cogoport"
+                >
+                  <span class="cap__seg" data-system="Apperture AI"></span>
+                  <span class="cap__seg" data-system="Cogoport"></span>
+                </div>
+                <p class="cap__evidence">
+                  Shipped a production RAG pipeline inside a live product; deployed ML pricing models
+                  serving real-time recommendations.
+                </p>
+                <ul class="chips chips--sm">
+                  <li>RAG</li><li>Parameter extraction</li><li>Random Forest</li><li>Training pipelines</li>
+                </ul>
+              </li>
+
+              <li class="cap" data-reveal>
+                <div class="cap__head">
+                  <h3 class="cap__domain">Production Engineering</h3>
+                  <span class="cap__depth mono">Applied</span>
+                </div>
+                <div
+                  class="cap__bar"
+                  role="img"
+                  aria-label="Exercised in 2 production systems: Periscope, Apperture AI"
+                >
+                  <span class="cap__seg" data-system="Periscope"></span>
+                  <span class="cap__seg" data-system="Apperture AI"></span>
+                </div>
+                <p class="cap__evidence">
+                  Backfill millions of records into query-ready datasets without disturbing live
+                  workloads; profile and harden services under heavy load.
+                </p>
+                <ul class="chips chips--sm">
+                  <li>Backfills</li><li>Profiling</li><li>Reliability</li><li>Playwright</li><li>Cloud</li>
+                </ul>
+              </li>
+            </ol>
+
+            <aside class="overview__side" data-reveal>
+              <p class="label">Bar legend</p>
+              <p class="overview__note">
+                Each segment is one production system the capability has actually run in — named,
+                not scored. Hover a segment to read it.
+              </p>
+
+              <dl class="facts mono">
+                <div><dt>Education</dt><dd>B.Tech CSE — AI &amp; ML<br /><span class="dim">VIT Bhopal · 2019–2023</span></dd></div>
+                <div><dt>Languages</dt><dd>Python · SQL · C++</dd></div>
+                <div><dt>Currently</dt><dd>Software Engineer II<br /><span class="dim">UrbanPiper, Bengaluru</span></dd></div>
+              </dl>
+
+              <a class="btn btn--ghost btn--block" href="/Sahil_Ghule_Resume.pdf" target="_blank" rel="noopener" data-cursor="link">
+                <span>DOWNLOAD RESUME</span><span aria-hidden="true">↓</span>
+              </a>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================= EXPERIENCE ========================= -->
+      <section class="section section--experience" id="experience">
+        <div class="shell">
+          <header class="section__head">
+            <p class="section__index mono" data-scramble>02 / EXPERIENCE</p>
+            <h2 class="section__title" data-reveal>Systems I have owned</h2>
+            <p class="lead" data-reveal>
+              Three roles, three systems. Each one is drawn below as the architecture it actually
+              is — scroll a diagram to watch it assemble, or focus a node to read what it does.
+            </p>
+          </header>
+        </div>
+
+        <ol class="timeline">
+          <li class="role" id="role-urbanpiper">
+            <div class="shell role__grid">
+              <header class="role__head" data-reveal>
+                <p class="role__idx mono">02.1</p>
+                <h3 class="role__company">UrbanPiper</h3>
+                <p class="role__title">Software Engineer II</p>
+                <p class="role__meta mono">Aug 2025 — Present · Bengaluru, India</p>
+                <p class="role__system">
+                  <span class="label">System</span>
+                  <strong>Periscope</strong> — a distributed availability &amp; downtime analytics
+                  platform for enterprise food-delivery operators.
+                </p>
+                <ul class="metrics" data-reveal-group>
+                  <li data-reveal><span class="metrics__v">~1M</span><span class="metrics__l">events / day</span></li>
+                  <li data-reveal><span class="metrics__v">10,000+</span><span class="metrics__l">stores monitored</span></li>
+                  <li data-reveal><span class="metrics__v">3×</span><span class="metrics__l">worker concurrency</span></li>
+                  <li data-reveal><span class="metrics__v">42%</span><span class="metrics__l">faster job processing</span></li>
+                </ul>
+              </header>
+
+              <div class="role__body">
+                <ul class="impact" data-reveal-group>
+                  <li data-reveal>
+                    Own the architecture and development of <strong>Periscope</strong>, a distributed
+                    backend platform on Python, FastAPI, ClickHouse and asynchronous workers, serving
+                    availability and downtime analytics to enterprise customers.
+                  </li>
+                  <li data-reveal>
+                    Design high-throughput ingestion and analytics pipelines processing
+                    <strong>~1M events per day across 10,000+ stores</strong> — 15-minute polling,
+                    96 checks per store daily.
+                  </li>
+                  <li data-reveal>
+                    Re-architect asynchronous job execution by migrating from RQ to
+                    <strong>ARQ</strong>, increasing worker concurrency <strong>3×</strong> and
+                    reducing end-to-end job processing time by <strong>42%</strong>.
+                  </li>
+                  <li data-reveal>
+                    Build ETL and backfill systems that process millions of records into query-ready
+                    analytical datasets without disrupting live workloads.
+                  </li>
+                  <li data-reveal>
+                    Build large-scale scheduling and automation workflows integrating multiple
+                    external systems, reducing manual operational effort by <strong>70%</strong>.
+                  </li>
+                  <li data-reveal>
+                    Develop distributed crawling and indexing pipelines with <strong>Playwright</strong>
+                    for automated real-world data acquisition.
+                  </li>
+                  <li data-reveal>
+                    Model and optimise ClickHouse schemas and SQL queries over large distributed
+                    datasets to keep analytical reads fast as data volume grows.
+                  </li>
+                </ul>
+                <ul class="chips" aria-label="Technologies">
+                  <li>Python</li><li>FastAPI</li><li>ClickHouse</li><li>ARQ</li>
+                  <li>Redis</li><li>Playwright</li><li>asyncio</li><li>SQL</li>
+                </ul>
+              </div>
+            </div>
+
+            <figure class="arch" data-architecture="urbanpiper">
+              <figcaption class="arch__caption">
+                <span class="label">Architecture — Periscope</span>
+                <span class="arch__hint mono">Hover or focus a node to inspect · Enter to pin</span>
+              </figcaption>
+              <div class="arch__stage"></div>
+              <p class="arch__readout" aria-live="polite"></p>
+            </figure>
+          </li>
+
+          <li class="role" id="role-apperture">
+            <div class="shell role__grid">
+              <header class="role__head" data-reveal>
+                <p class="role__idx mono">02.2</p>
+                <h3 class="role__company">Apperture AI</h3>
+                <p class="role__title">Software Engineer</p>
+                <p class="role__meta mono">May 2024 — Aug 2025 · Remote</p>
+                <p class="role__system">
+                  <span class="label">System</span>
+                  <strong>Availability intelligence &amp; applied GenAI</strong> — analytical
+                  dashboards over food-delivery availability data, plus a production RAG pipeline
+                  inside a live product.
+                </p>
+                <ul class="metrics" data-reveal-group>
+                  <li data-reveal><span class="metrics__v">70%</span><span class="metrics__l">less dataset prep time</span></li>
+                  <li data-reveal><span class="metrics__v">RAG</span><span class="metrics__l">shipped to production</span></li>
+                  <li data-reveal><span class="metrics__v">2</span><span class="metrics__l">reusable API surfaces</span></li>
+                </ul>
+              </header>
+
+              <div class="role__body">
+                <ul class="impact" data-reveal-group>
+                  <li data-reveal>
+                    Integrated parameter-extraction models into a production
+                    <strong>Retrieval-Augmented Generation</strong> pipeline, shipping an AI-powered
+                    capability inside a live product.
+                  </li>
+                  <li data-reveal>
+                    Automated AI training-data generation pipelines with reproducible Python
+                    workflows, reducing dataset preparation time by <strong>70%</strong>.
+                  </li>
+                  <li data-reveal>
+                    Built backend services powering analytical dashboards that monitor store- and
+                    item-level availability across food-delivery ecosystems.
+                  </li>
+                  <li data-reveal>
+                    Designed scalable analytical storage and query systems on
+                    <strong>ClickHouse</strong> — schema design, aggregation strategy and query
+                    tuning — to sustain large analytical workloads.
+                  </li>
+                  <li data-reveal>
+                    Built reusable <strong>GraphQL</strong> and <strong>gRPC</strong> services for
+                    efficient large-scale data access, and optimised backend services for
+                    performance and reliability under heavy load.
+                  </li>
+                </ul>
+                <ul class="chips" aria-label="Technologies">
+                  <li>Python</li><li>GraphQL</li><li>gRPC</li><li>ClickHouse</li>
+                  <li>MongoDB</li><li>RAG</li><li>asyncio</li>
+                </ul>
+              </div>
+            </div>
+
+            <figure class="arch" data-architecture="apperture">
+              <figcaption class="arch__caption">
+                <span class="label">Architecture — Analytics &amp; RAG</span>
+                <span class="arch__hint mono">Hover or focus a node to inspect · Enter to pin</span>
+              </figcaption>
+              <div class="arch__stage"></div>
+              <p class="arch__readout" aria-live="polite"></p>
+            </figure>
+          </li>
+
+          <li class="role" id="role-cogoport">
+            <div class="shell role__grid">
+              <header class="role__head" data-reveal>
+                <p class="role__idx mono">02.3</p>
+                <h3 class="role__company">Cogoport</h3>
+                <p class="role__title">Software Development Engineer I</p>
+                <p class="role__meta mono">Feb 2023 — Oct 2023 · Mumbai, India</p>
+                <p class="role__system">
+                  <span class="label">System</span>
+                  <strong>Dynamic pricing for logistics</strong> — machine-learning pricing models
+                  deployed to production for real-time recommendations on large-scale logistics data.
+                </p>
+                <ul class="metrics" data-reveal-group>
+                  <li data-reveal><span class="metrics__v">15%</span><span class="metrics__l">better pricing accuracy</span></li>
+                  <li data-reveal><span class="metrics__v">Live</span><span class="metrics__l">models in production</span></li>
+                </ul>
+              </header>
+
+              <div class="role__body">
+                <ul class="impact" data-reveal-group>
+                  <li data-reveal>
+                    Developed and deployed machine-learning dynamic pricing models
+                    (<strong>Random Forest</strong>, Python) to production for real-time pricing
+                    recommendations on large-scale logistics data.
+                  </li>
+                  <li data-reveal>
+                    Built backend services powering logistics analytics dashboards, improving pricing
+                    prediction accuracy by <strong>15%</strong> through data-quality improvements and
+                    feature engineering.
+                  </li>
+                </ul>
+                <ul class="chips" aria-label="Technologies">
+                  <li>Python</li><li>Random Forest</li><li>Scikit-learn</li><li>Pandas</li><li>SQL</li>
+                </ul>
+              </div>
+            </div>
+
+            <figure class="arch" data-architecture="cogoport">
+              <figcaption class="arch__caption">
+                <span class="label">Architecture — Pricing pipeline</span>
+                <span class="arch__hint mono">Hover or focus a node to inspect · Enter to pin</span>
+              </figcaption>
+              <div class="arch__stage"></div>
+              <p class="arch__readout" aria-live="polite"></p>
+            </figure>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ============================ STACK =========================== -->
+      <section class="section" id="stack">
+        <div class="shell">
+          <header class="section__head">
+            <p class="section__index mono" data-scramble>03 / SYSTEMS MAP</p>
+            <h2 class="section__title" data-reveal>The stack, as a dependency graph</h2>
+            <p class="lead" data-reveal>
+              Technologies are not a list of badges — they are a graph of things that call each
+              other. Hover a node to isolate what it touches and what it made possible.
+            </p>
+          </header>
+
+          <div class="stackmap" data-stack-map>
+            <div class="stackmap__stage"></div>
+            <div class="stackmap__panel" aria-live="polite">
+              <p class="stackmap__empty mono">SELECT A NODE</p>
+            </div>
+          </div>
+
+          <!-- Readable without the graph; the graph is the enhancement. -->
+          <ul class="stack-list chips" aria-label="Technologies">
+            <li>Python</li><li>SQL</li><li>C++</li><li>FastAPI</li><li>GraphQL</li>
+            <li>gRPC</li><li>ClickHouse</li><li>PostgreSQL</li><li>MongoDB</li>
+            <li>ARQ</li><li>Playwright</li><li>Pandas</li><li>Scikit-learn</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================== PROJECTS ========================= -->
+      <section class="section" id="projects">
+        <div class="shell">
+          <header class="section__head">
+            <p class="section__index mono" data-scramble>04 / CASE FILES</p>
+            <h2 class="section__title" data-reveal>Selected work</h2>
+            <p class="lead" data-reveal>
+              Personal systems and studies, filed as cases. Open one for the problem, the approach,
+              the architecture and what actually came out of it.
+            </p>
+          </header>
+
+          <ul class="cases" data-reveal-group>
+            <li class="case" data-project="prostate" data-glyph="pipeline" data-reveal data-cursor="project">
+              <div class="case__meta mono">
+                <span class="case__id">PRJ_001</span>
+                <span class="case__status" data-status="SHIPPED">SHIPPED</span>
+              </div>
+              <div class="case__preview" aria-hidden="true"></div>
+              <h3 class="case__title">
+                <button class="case__open" type="button" aria-haspopup="dialog">
+                  AI-Powered Prostate Cancer Detection
+                </button>
+              </h3>
+              <p class="case__domain mono">Applied deep learning · Medical prognosis</p>
+              <p class="case__summary">
+                A deep-learning application predicting prostate cancer probability, served through a
+                Flask interface and deployed to cloud infrastructure.
+              </p>
+              <ul class="chips chips--sm"><li>Python</li><li>Flask</li><li>DNN</li><li>Cloud</li></ul>
+              <a
+                class="case__repo mono"
+                href="https://github.com/Code-MaxX/Prostate_Cancer_Detector"
+                target="_blank"
+                rel="noopener"
+                data-cursor="link"
+              >REPO ↗</a>
+            </li>
+
+            <li class="case" data-project="powerplant" data-glyph="regression" data-reveal data-cursor="project">
+              <div class="case__meta mono">
+                <span class="case__id">PRJ_002</span>
+                <span class="case__status" data-status="RESEARCH">RESEARCH</span>
+              </div>
+              <div class="case__preview" aria-hidden="true"></div>
+              <h3 class="case__title">
+                <button class="case__open" type="button" aria-haspopup="dialog">
+                  Power Plant Output Prediction
+                </button>
+              </h3>
+              <p class="case__domain mono">Regression modelling · Operational analytics</p>
+              <p class="case__summary">
+                Machine-learning models predicting full-load electrical power generation, aimed at
+                operational-efficiency decisions.
+              </p>
+              <ul class="chips chips--sm"><li>Python</li><li>Scikit-learn</li><li>Pandas</li></ul>
+            </li>
+
+            <li class="case" data-project="blockchain-tiktok" data-glyph="ledger" data-reveal data-cursor="project">
+              <div class="case__meta mono">
+                <span class="case__id">PRJ_003</span>
+                <span class="case__status" data-status="EXPLORATION">EXPLORATION</span>
+              </div>
+              <div class="case__preview" aria-hidden="true"></div>
+              <h3 class="case__title">
+                <button class="case__open" type="button" aria-haspopup="dialog">
+                  Blockchain TikTok
+                </button>
+              </h3>
+              <p class="case__domain mono">Decentralised media · Web3</p>
+              <p class="case__summary">
+                A short-form video client exploring decentralised media patterns — a TypeScript
+                frontend over blockchain integration experiments.
+              </p>
+              <ul class="chips chips--sm"><li>TypeScript</li><li>Blockchain</li><li>Web3</li></ul>
+              <a
+                class="case__repo mono"
+                href="https://github.com/Code-MaxX/blockchain-tiktok"
+                target="_blank"
+                rel="noopener"
+                data-cursor="link"
+              >REPO ↗</a>
+            </li>
+
+            <li class="case" data-project="analytics" data-glyph="notebook" data-reveal data-cursor="project">
+              <div class="case__meta mono">
+                <span class="case__id">PRJ_004</span>
+                <span class="case__status" data-status="RESEARCH">RESEARCH</span>
+              </div>
+              <div class="case__preview" aria-hidden="true"></div>
+              <h3 class="case__title">
+                <button class="case__open" type="button" aria-haspopup="dialog">
+                  Data Analytics Studies
+                </button>
+              </h3>
+              <p class="case__domain mono">Exploratory analysis · Visualisation</p>
+              <p class="case__summary">
+                Notebook-driven analytics over real datasets — exploration, visualisation and
+                insight generation.
+              </p>
+              <ul class="chips chips--sm"><li>Python</li><li>Pandas</li><li>SQL</li><li>Jupyter</li></ul>
+              <a
+                class="case__repo mono"
+                href="https://github.com/Code-MaxX/Data-Analytics-Projects"
+                target="_blank"
+                rel="noopener"
+                data-cursor="link"
+              >REPO ↗</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================== RESEARCH ========================= -->
+      <section class="section section--tight" id="research">
+        <div class="shell">
+          <header class="section__head">
+            <p class="section__index mono" data-scramble>05 / RESEARCH</p>
+            <h2 class="section__title" data-reveal>Publication</h2>
+          </header>
+
+          <details class="paper" data-reveal>
+            <summary class="paper__summary" data-cursor="link">
+              <span class="paper__stamp mono">Peer reviewed</span>
+              <h3 class="paper__title">
+                Prostate Cancer Prognosis — A comparative approach using Machine Learning Techniques
+              </h3>
+              <p class="paper__venue mono">
+                5th International Conference on Intelligent Computing and Control Systems (ICICCS) ·
+                December 2020
+              </p>
+              <span class="paper__toggle mono" aria-hidden="true">
+                <span class="paper__toggle-open">UNFOLD DOCUMENT</span>
+                <span class="paper__toggle-close">FOLD DOCUMENT</span>
+              </span>
+            </summary>
+
+            <div class="paper__body">
+              <div class="paper__col">
+                <p class="label">Abstract</p>
+                <p>
+                  A comparative evaluation of machine-learning techniques applied to prostate cancer
+                  prognosis, benchmarking classifier families against one another on the same task to
+                  establish which approaches carry genuine predictive signal.
+                </p>
+              </div>
+              <div class="paper__col">
+                <p class="label">Topics</p>
+                <ul class="chips chips--sm">
+                  <li>Machine Learning</li><li>Comparative Study</li>
+                  <li>Medical Prognosis</li><li>Classification</li>
+                </ul>
+                <p class="label">Related</p>
+                <p class="dim">
+                  The applied counterpart to this study shipped as
+                  <strong>PRJ_001 — AI-Powered Prostate Cancer Detection</strong>.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- =========================== CONTACT ========================== -->
+      <section class="section section--contact" id="contact">
+        <div class="shell">
+          <header class="section__head">
+            <p class="section__index mono" data-scramble>06 / CONNECTION TERMINAL</p>
+            <h2 class="section__title" data-reveal>Have a system worth building?</h2>
+          </header>
+
+          <div class="terminal" data-reveal data-terminal>
+            <div class="terminal__bar mono">
+              <span class="terminal__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="terminal__name">connection_terminal — sahil.ghule</span>
+              <span class="terminal__status"><span class="dot" aria-hidden="true"></span>STATUS: AVAILABLE</span>
+            </div>
+
+            <div class="terminal__body mono">
+              <p class="terminal__line">
+                <span class="terminal__prompt" aria-hidden="true">$</span>
+                <span data-terminal-type>open --channels</span>
+              </p>
+
+              <ul class="channels">
+                <li>
+                  <a href="mailto:work.sahilghule@gmail.com" data-cursor="link">
+                    <span class="channels__key">EMAIL</span>
+                    <span class="channels__val">work.sahilghule@gmail.com</span>
+                    <span class="channels__arrow" aria-hidden="true">↗</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.linkedin.com/in/sahil-ghule" target="_blank" rel="noopener" data-cursor="link">
+                    <span class="channels__key">LINKEDIN</span>
+                    <span class="channels__val">in/sahil-ghule</span>
+                    <span class="channels__arrow" aria-hidden="true">↗</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://github.com/Code-MaxX" target="_blank" rel="noopener" data-cursor="link">
+                    <span class="channels__key">GITHUB</span>
+                    <span class="channels__val">Code-MaxX</span>
+                    <span class="channels__arrow" aria-hidden="true">↗</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/Sahil_Ghule_Resume.pdf" target="_blank" rel="noopener" data-cursor="link">
+                    <span class="channels__key">RESUME</span>
+                    <span class="channels__val">Sahil_Ghule_Resume.pdf</span>
+                    <span class="channels__arrow" aria-hidden="true">↓</span>
+                  </a>
+                </li>
+              </ul>
+
+              <p class="terminal__line terminal__line--out">
+                <span class="terminal__prompt" aria-hidden="true">›</span>
+                4 channels open · Bengaluru, IN · replies within a day
+              </p>
+            </div>
+          </div>
+
+          <div class="contact__cta" data-reveal>
+            <a class="btn btn--primary btn--lg" href="mailto:work.sahilghule@gmail.com" data-cursor="link">
+              <span>INITIATE CONNECTION</span><span aria-hidden="true">→</span>
+            </a>
+            <p class="dim">
+              Open to backend platforms, analytics infrastructure and AI systems in production.
+            </p>
           </div>
         </div>
       </section>
     </main>
 
     <footer class="footer">
-      <p>© <span id="year"></span> Sahil Dilip Ghule · Built with intention</p>
-      <a href="#top" class="mono">Back to top ↑</a>
+      <div class="shell footer__grid">
+        <div>
+          <p class="footer__name">SAHIL GHULE</p>
+          <p class="footer__role mono">Backend &amp; AI Systems Engineer</p>
+        </div>
+        <p class="footer__note dim">
+          Built with curiosity, caffeine &amp; questionable debugging decisions.
+        </p>
+        <ul class="footer__links mono">
+          <li><a href="https://github.com/Code-MaxX" target="_blank" rel="noopener" data-cursor="link">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/sahil-ghule" target="_blank" rel="noopener" data-cursor="link">LinkedIn</a></li>
+          <li><a href="mailto:work.sahilghule@gmail.com" data-cursor="link">Email</a></li>
+        </ul>
+        <p class="footer__legal mono">© <span data-year>2026</span> Sahil Dilip Ghule</p>
+      </div>
     </footer>
-
-    <script src="script.js?v=2"></script>
   </body>
 </html>

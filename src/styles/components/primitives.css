@@ -1,0 +1,182 @@
+/* ============================================================================
+   PRIMITIVES — buttons, chips, status dot, reveal states
+   ========================================================================== */
+
+.btn {
+  --btn-fg: var(--c-fg);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.72rem 1.15rem;
+  border: 1px solid var(--c-line-strong);
+  border-radius: var(--r-sm);
+  color: var(--btn-fg);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    border-color var(--dur-2) var(--ease-out),
+    color var(--dur-2) var(--ease-out),
+    transform var(--dur-2) var(--ease-out);
+}
+
+/* A sweep that reads as a signal crossing the control, not a hover blob. */
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgb(var(--c-accent-rgb) / 0.16) 45%,
+    rgb(var(--c-accent-rgb) / 0.16) 55%,
+    transparent 100%
+  );
+  transform: translateX(-101%);
+  transition: transform var(--dur-3) var(--ease-tech);
+}
+.btn:hover::before,
+.btn:focus-visible::before {
+  transform: translateX(0);
+}
+.btn:hover {
+  border-color: var(--c-line-accent);
+  color: var(--c-accent-bright);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--primary {
+  border-color: var(--c-line-accent);
+  color: var(--c-accent);
+  background: rgb(var(--c-accent-rgb) / 0.05);
+}
+.btn--primary:hover {
+  border-color: var(--c-accent);
+  box-shadow: var(--glow-accent);
+}
+
+.btn--ghost {
+  color: var(--c-fg-dim);
+}
+
+.btn--lg {
+  padding: 0.95rem 1.6rem;
+  font-size: var(--fs-mono);
+}
+
+.btn--block {
+  width: 100%;
+  justify-content: space-between;
+}
+
+/* Bracketed label — the "[ EXPLORE SYSTEM ]" affordance, done in CSS so the
+   accessible name stays clean. */
+.btn--primary > span:first-child::before,
+.btn--primary > span:first-child::after {
+  color: var(--c-accent-deep);
+  transition: color var(--dur-2), transform var(--dur-2);
+  display: inline-block;
+}
+.btn--primary > span:first-child::before {
+  content: "[";
+  margin-right: 0.55em;
+}
+.btn--primary > span:first-child::after {
+  content: "]";
+  margin-left: 0.55em;
+}
+.btn--primary:hover > span:first-child::before {
+  color: var(--c-accent);
+  transform: translateX(-2px);
+}
+.btn--primary:hover > span:first-child::after {
+  color: var(--c-accent);
+  transform: translateX(2px);
+}
+
+/* --- Chips --------------------------------------------------------------- */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chips li {
+  padding: 0.24rem 0.55rem;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-xs);
+  background: color-mix(in srgb, var(--c-surface-1) 70%, transparent);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: 0.06em;
+  color: var(--c-fg-dim);
+  transition: border-color var(--dur-2), color var(--dur-2);
+}
+.chips li:hover {
+  border-color: var(--c-line-accent);
+  color: var(--c-fg);
+}
+
+.chips--sm li {
+  font-size: 0.625rem;
+  padding: 0.2rem 0.45rem;
+}
+
+/* --- Live dot ------------------------------------------------------------ */
+.dot {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--c-live);
+  box-shadow: 0 0 0 0 rgb(var(--c-accent-rgb) / 0.55);
+  animation: dot-ping 2.6s var(--ease-out) infinite;
+}
+
+@keyframes dot-ping {
+  0% { box-shadow: 0 0 0 0 rgb(var(--c-accent-rgb) / 0.5); }
+  70% { box-shadow: 0 0 0 8px rgb(var(--c-accent-rgb) / 0); }
+  100% { box-shadow: 0 0 0 0 rgb(var(--c-accent-rgb) / 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot { animation: none; }
+}
+
+/* --- Definition-list "facts" grid ---------------------------------------- */
+.facts {
+  display: grid;
+  gap: var(--sp-4);
+  margin-block: var(--sp-5);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+.facts > div {
+  display: grid;
+  gap: 0.25rem;
+  padding-bottom: var(--sp-4);
+  border-bottom: 1px solid var(--c-line);
+}
+.facts > div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+.facts dt {
+  color: var(--c-fg-faint);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-mono);
+}
+.facts dd {
+  color: var(--c-fg);
+  line-height: 1.5;
+}

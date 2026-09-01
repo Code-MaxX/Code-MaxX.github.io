@@ -1,0 +1,150 @@
+/* ============================================================================
+   OVERVIEW — engineer profile
+   ========================================================================== */
+
+.overview {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3.5rem);
+}
+
+.caps {
+  display: grid;
+  gap: 1px;
+  background: var(--c-line);
+  border-block: 1px solid var(--c-line);
+}
+
+.cap {
+  display: grid;
+  gap: var(--sp-3);
+  padding: clamp(1.25rem, 3vw, 1.85rem) 0;
+  background: var(--c-bg);
+  transition: background var(--dur-2) var(--ease-out);
+}
+.cap:hover {
+  background: color-mix(in srgb, var(--c-surface-1) 65%, var(--c-bg));
+}
+
+.cap__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+}
+
+.cap__domain {
+  font-size: var(--fs-h3);
+  font-weight: 500;
+}
+
+.cap__depth {
+  flex: none;
+  font-size: var(--fs-mono-sm);
+  color: var(--c-accent);
+  padding: 0.18rem 0.45rem;
+  border: 1px solid var(--c-line-accent);
+  border-radius: var(--r-xs);
+}
+
+/* The bar is data: one segment per production system, each one named. */
+.cap__bar {
+  display: flex;
+  gap: 4px;
+  height: 6px;
+}
+
+.cap__seg {
+  position: relative;
+  flex: 1;
+  max-width: 140px;
+  background: rgb(var(--c-accent-rgb) / 0.3);
+  border-radius: 1px;
+  transform-origin: left;
+  transition: background var(--dur-2) var(--ease-out);
+}
+.cap:hover .cap__seg {
+  background: var(--c-accent);
+}
+
+.cap__seg::after {
+  content: attr(data-system);
+  position: absolute;
+  left: 0;
+  top: calc(100% + 7px);
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--c-fg-faint);
+  opacity: 0;
+  transform: translateY(-3px);
+  transition: opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
+  pointer-events: none;
+}
+.cap:hover .cap__seg::after,
+.cap:focus-within .cap__seg::after {
+  opacity: 1;
+  transform: none;
+}
+
+/* Space reserved up-front so the labels never shift the layout. */
+.cap__bar {
+  margin-bottom: 1.15rem;
+}
+
+.js-motion .cap__seg {
+  transform: scaleX(0);
+  transition:
+    transform 0.7s var(--ease-tech),
+    background var(--dur-2) var(--ease-out);
+}
+.js-motion .cap.is-revealed .cap__seg {
+  transform: scaleX(1);
+}
+.js-motion .cap.is-revealed .cap__seg:nth-child(2) { transition-delay: 0.09s; }
+.js-motion .cap.is-revealed .cap__seg:nth-child(3) { transition-delay: 0.18s; }
+
+.cap__evidence {
+  max-width: 58ch;
+  color: var(--c-fg-dim);
+  font-size: var(--fs-body);
+}
+
+.overview__side {
+  align-self: start;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-md);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--c-surface-1) 85%, transparent), transparent);
+}
+
+.overview__note {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-sm);
+  color: var(--c-fg-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-motion .cap__seg { transform: none; }
+}
+
+@media (min-width: 1024px) {
+  .overview {
+    grid-template-columns: minmax(0, 1fr) 22rem;
+    align-items: start;
+  }
+  .cap {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "head bar"
+      "evidence chips";
+    column-gap: var(--sp-6);
+    align-items: start;
+  }
+  .cap__head { grid-area: head; }
+  .cap__bar { grid-area: bar; align-self: center; }
+  .cap__evidence { grid-area: evidence; }
+  .cap .chips { grid-area: chips; align-content: start; }
+}

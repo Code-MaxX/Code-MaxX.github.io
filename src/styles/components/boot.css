@@ -1,0 +1,99 @@
+/* ============================================================================
+   BOOT SEQUENCE
+
+   The ceiling is enforced by CSS, not JavaScript: the overlay animates itself
+   away in 1.4s whatever happens to the module. Script can only end it sooner.
+   ========================================================================== */
+
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-boot);
+  display: grid;
+  place-items: center;
+  background: var(--c-void);
+  animation: boot-clear 1.4s var(--ease-out) forwards;
+}
+
+.boot__inner {
+  width: min(340px, 78vw);
+}
+
+.boot__brand {
+  font-size: var(--fs-mono-sm);
+  color: var(--c-accent);
+  margin-bottom: var(--sp-4);
+  opacity: 0;
+  animation: boot-in 0.3s var(--ease-out) 0.04s forwards;
+}
+
+.boot__log {
+  display: grid;
+  gap: 0.35rem;
+  font-size: var(--fs-mono-sm);
+  color: var(--c-fg-dim);
+  letter-spacing: var(--tracking-mono);
+  margin-bottom: var(--sp-4);
+  min-height: 6.2em;
+}
+
+.boot__log li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: boot-in 0.24s var(--ease-out) forwards;
+}
+.boot__log li::before {
+  content: "›";
+  color: var(--c-accent-deep);
+}
+.boot__log li:nth-child(1) { animation-delay: 0.08s; }
+.boot__log li:nth-child(2) { animation-delay: 0.22s; }
+.boot__log li:nth-child(3) { animation-delay: 0.36s; }
+.boot__log li:nth-child(4) { animation-delay: 0.5s; }
+.boot__log li:nth-child(5) { animation-delay: 0.64s; color: var(--c-accent); }
+.boot__log li:nth-child(5)::before { content: "✓"; color: var(--c-accent); }
+
+.boot__bar {
+  height: 1px;
+  background: var(--c-line-strong);
+  overflow: hidden;
+}
+.boot__fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--c-accent);
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: boot-fill 0.9s var(--ease-tech) 0.05s forwards;
+}
+
+@keyframes boot-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes boot-fill {
+  to { transform: scaleX(1); }
+}
+@keyframes boot-clear {
+  0%, 74% { opacity: 1; visibility: visible; }
+  100% { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+
+/* Script finished early — dismiss without waiting out the ceiling. */
+.boot.is-done {
+  animation: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.45s var(--ease-out), visibility 0s linear 0.45s;
+}
+
+/* A boot animation is exactly the kind of thing reduced-motion users mean. */
+@media (prefers-reduced-motion: reduce) {
+  .boot {
+    display: none;
+  }
+}
