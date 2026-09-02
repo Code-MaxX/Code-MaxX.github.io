@@ -138,7 +138,7 @@ export function initCommandPalette(): void {
       el("span", {}, ["↑↓ navigate"]),
       el("span", {}, ["⏎ run"]),
       el("span", {}, ["esc close"]),
-      el("span", {}, ["type ? for help"]),
+      el("span", {}, ["⌘K or / to open"]),
     ]),
   ]);
 
@@ -147,6 +147,18 @@ export function initCommandPalette(): void {
 
   let matches: Command[] = COMMANDS;
   let active = 0;
+
+  /*
+   * Closing goes through here rather than through a `close` event listener.
+   * The dialog's `close` event is not safe to depend on — it does not fire in
+   * every engine — and a missed one leaves the document with `overflow:
+   * hidden` and Lenis stopped, which reads to the visitor as a frozen page.
+   * Releasing the lock unconditionally also makes this a recovery path.
+   */
+  const dismiss = (): void => {
+    if (dialog.open) dialog.close();
+    lockScroll(false);
+  };
 
   const io: Output = {
     print: (lines, tone) => {
@@ -157,7 +169,7 @@ export function initCommandPalette(): void {
       }
     },
     clear: () => out.replaceChildren(),
-    close: () => dialog.close(),
+    close: () => dismiss(),
   };
 
   const draw = (): void => {
@@ -249,13 +261,25 @@ export function initCommandPalette(): void {
   });
 
   dialog.addEventListener("keydown", (event) => {
-    if (event.key === "Tab") trapFocus(panel, event);
+    if (event.key === "Tab") {
+      trapFocus(panel, event);
+      return;
+    }
+    // Close on Escape ourselves rather than leaning on the dialog's default
+    // cancel action: anything that calls preventDefault upstream — now or
+    // later — would otherwise strand the modal open with no way out.
+    if (event.key === "Escape") {
+      event.preventDefault();
+      dismiss();
+    }
   });
 
   dialog.addEventListener("click", (event) => {
-    if (event.target === dialog) dialog.close();
+    if (event.target === dialog) dismiss();
   });
 
+  // Belt and braces: harmless when it does fire, and covers a UA-initiated
+  // close that never reaches dismiss().
   dialog.addEventListener("close", () => lockScroll(false));
 
   const open = (prefill?: string): void => {
@@ -269,13 +293,37 @@ export function initCommandPalette(): void {
     input.select();
   };
 
-  on(document, "keydown", (event) => {
-    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
-      event.preventDefault();
-      if (dialog.open) dialog.close();
-      else open();
-    }
-  });
+  const isTypingTarget = (target: EventTarget | null): boolean =>
+    target instanceof HTMLElement &&
+    (target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName));
+
+  /*
+   * Two ways in, on purpose. Cmd/Ctrl-K is the shortcut people try first, but
+   * some browsers (Firefox and Arc among them) bind it to their own search bar
+   * and never hand it to the page — for those users the palette would simply
+   * appear broken. `/` is claimed by nobody and costs nothing to support.
+   *
+   * Capture phase so no other page listener can consume it first, and `code`
+   * alongside `key` so layouts where the modifier changes the emitted
+   * character still match.
+   */
+  on(window, "keydown", (event) => {
+    const combo =
+      (event.metaKey || event.ctrlKey) &&
+      !event.altKey &&
+      (event.key?.toLowerCase() === "k" || event.code === "KeyK");
+    const slash =
+      event.key === "/" &&
+      !event.metaKey &&
+      !event.ctrlKey &&
+      !event.altKey &&
+      !isTypingTarget(event.target);
+
+    if (!combo && !slash) return;
+    event.preventDefault();
+    if (dialog.open) dismiss();
+    else open();
+  }, { capture: true });
 
   for (const trigger of document.querySelectorAll<HTMLElement>("[data-open-palette]")) {
     trigger.addEventListener("click", () => open());

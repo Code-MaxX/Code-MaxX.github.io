@@ -25,17 +25,32 @@ export function initCaseStudies(): void {
 
   let opener: HTMLElement | null = null;
 
-  const close = (): void => dialog.close();
-
-  dialog.addEventListener("close", () => {
+  /*
+   * Teardown runs here, not in a `close` listener: that event is not
+   * dependable across engines, and missing it would leave the page scroll-
+   * locked behind a dismissed overlay.
+   */
+  const close = (): void => {
+    if (dialog.open) dialog.close();
     lockScroll(false);
     opener?.focus();
     opener = null;
-  });
+  };
+
+  // Belt and braces for a close this module did not initiate.
+  dialog.addEventListener("close", () => lockScroll(false));
 
   // Click on the backdrop — i.e. on the dialog itself, outside the panel.
   dialog.addEventListener("click", (event) => {
     if (event.target === dialog) close();
+  });
+
+  // Same as the palette: own the Escape key rather than relying on the UA's
+  // default cancel action, so nothing upstream can trap the reader inside.
+  dialog.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    event.preventDefault();
+    close();
   });
 
   const open = (card: HTMLElement): void => {
